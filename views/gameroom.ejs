@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+    body {
+      background-image:linear-gradient(135deg,rgb(82, 82, 211),rgb(34, 64, 128));
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0,0,0,0.9);
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 999;
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex; /* Use flexbox for horizontal layout */
+      align-items: center; /* Vertically center items */
+    }
+
+    .navbar li {
+      float: none; 
+      margin-left: 10px;
+    }
+
+    .navbar li h1 {
+      color: #fff;
+      margin: 0; 
+      font-size: 24px;
+    }
+
+    .navbar li a {
+      display: block;
+      color: #fff;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+    .navbar li a:hover {
+      background-color: #333;
+      color: #fff;
+    }
+
+    /*--------------------------------*/
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      margin-top: 60px;
+      display:flex;
+      flex-direction: column;
+      max-height: 70%;
+      padding-bottom: 100px;
+    }
+
+    .message {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color:rgba(255,255,255,0.4)
+    }
+
+    .sender, .message {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .sendMessage {
+      display:flex;
+      flex-direction: row;
+      width:76%;
+      background-color: rgb(255, 255, 255);
+      position:fixed;
+      bottom:0;
+      padding: 10px 20px;
+      margin-bottom: 15px;
+    }
+
+    .sendMessage textarea {
+      width: 90%;
+      font-size: 16px;
+      resize:none;
+    }
+
+    .sendMessage button {
+      padding:10px 40px;
+      background-color: #04AA6D;
+      color: #fff;
+      border: 1px;
+      border-radius: 2px;
+      cursor: pointer;
+      margin-left: 20px;
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <ul>
+      <li><h1>Chat Games</h1></li>
+      <li><a href="/">Home</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+
+    <% messages.forEach(message => { %>
+      <div class="message">
+        <label class="sender"><%= message.username %></label>
+        <label class="message"> <%= message.text %> </label>
+      </div>
+    <% }); %>
+
+    <form class="sendMessage">
+      <textarea rows="3" name="text" placeholder="Message..."></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <script>
+
+    var form = document.querySelector("form")
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const params = Object.fromEntries(urlSearchParams.entries());
+
+      var formData = new FormData(e.target)
+      var data = {
+        username: params.username,
+        text: document.querySelector("textarea").value,
+      }
+      var post = JSON.stringify(data);
+      console.log(data)
+      
+      fetch("/gameroom", {
+        method: 'POST',
+        body: post,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+
+    })
+  </script>
+</body>
+</html>
+

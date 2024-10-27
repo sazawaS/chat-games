@@ -56,6 +56,44 @@
       color: #fff;
     }
 
+    /*----------------------------------------*/
+
+    .container {
+      width: 60%;
+      margin: 0 auto;
+      margin-top: 10rem;
+      text-align:center;
+      background-color: rgba(255,255,255,0.5);
+      border: 2px solid #ccc;
+      border-radius: 3px;
+      padding:10px 0px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px; 
+
+    }
+
+    button {
+      background-color: green;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin-top:10px;
+      cursor: pointer;
+
+    }
+
   </style>
 </head>
 <body>
@@ -63,9 +101,20 @@
     <ul>
       <li><h1>Chat Games</h1></li>
       <li><a href="/">Home</a></li>
-      <li><a href="/gameroom">Game</a></li>
   </ul>
   </nav>
+
+
+  <div class="container">
+    <h1>Please enter a username before continuing:</h1>
+    <form id='form' action='/gameroom' method="GET">
+      <input name="username" type="text" placeholder="sazawa">
+      <button>Enter</button>
+    </form>
+  </div>
+
+
+
 </body>
 </html>
 
