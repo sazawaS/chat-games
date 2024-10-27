@@ -1,28 +1,37 @@
 const express = require("express")
-const mongoose = require('mongoose')
 const router = express.Router()
+const session = require('express-session');
 
+
+const User = require("../models/user")
 const Message = require("../models/message")
 
 router.get('/', (req, res) => {
-  res.render('username')
+  
+  res.render('login')
 })
+
+
 router.post('/', async (req, res) => {
 
-  console.log(req.body)
 
-  const joinMessage = new Message({
-    username: req.body.username,
-    text: req.body.username + " has joined the game!"
-  })
   try {
-    await joinMessage.save();
-    res.render('gameroom');
-  } catch {
-    console.error('failed saving new message')
+    const user = await User.find({
+      username: req.body.username,
+      password: req.body.password 
+    })
+    
+    if (user[0].id == null) {
+      res.render('login', { errorMessage: 'Wrong password or username! Dont have an account?'})
+    } else {
+      console.log('found user', user)
+      req.session.user = { id:user.id, username: req.body.username };
+      res.redirect('/gameroom')
+    }
+  } catch { 
+    res.render('login', { errorMessage: 'Wrong password or username! Dont have an account?'})
   }
 
-  console.log(req.body)
 })
 
 module.exports = router;

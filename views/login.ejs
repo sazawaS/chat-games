@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+    body {
+      background-image:linear-gradient(135deg,rgb(82, 82, 211),rgb(34, 64, 128));
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0,0,0,0.9);
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 999;
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex; /* Use flexbox for horizontal layout */
+      align-items: center; /* Vertically center items */
+    }
+
+    .navbar li {
+      float: none; 
+      margin-left: 10px;
+    }
+
+    .navbar li h1 {
+      color: #fff;
+      margin: 0; 
+      font-size: 24px;
+    }
+
+    .navbar li a {
+      display: block;
+      color: #fff;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+    .navbar li a:hover {
+      background-color: #333;
+      color: #fff;
+    }
+
+    /*----------------------------------------*/
+
+    .container {
+      width: 60%;
+      margin: 0 auto;
+      margin-top: 10rem;
+      text-align:center;
+      background-color: rgba(255,255,255,0.5);
+      border: 2px solid #ccc;
+      border-radius: 3px;
+      padding:10px 0px;
+    }
+
+    h1 {
+      text-size:20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px; 
+
+    }
+
+    button {
+      background-color: green;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin-top:10px;
+      cursor: pointer;
+
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <ul>
+      <li><h1>Chat Games</h1></li>
+      <li><a href="/">Home</a></li>
+  </ul>
+  </nav>
+
+
+  <div class="container">
+    <h1>Please enter your username and password:</h1>
+    <form id='form' action='/join' method="POST">
+      <input name="username" type="text" placeholder="Username">
+      <input name="password" type="password" placeholder="Password">
+      <button>Enter</button>
+    </form>
+
+    <%= locals.errorMessage || '' %>
+    <a href="/register">Register Here</a>
+  </div>
+
+
+
+</body>
+</html>
+

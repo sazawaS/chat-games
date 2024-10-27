@@ -69,6 +69,10 @@
       padding:10px 0px;
     }
 
+    h1 {
+      text-size:20px;
+    }
+
     form {
       display: flex;
       flex-direction: column;
@@ -76,7 +80,7 @@
 
     }
 
-    input[type="text"] {
+    input {
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 5px; 
@@ -106,11 +110,15 @@
 
 
   <div class="container">
-    <h1>Please enter a username before continuing:</h1>
-    <form id='form' action='/gameroom' method="GET">
-      <input name="username" type="text" placeholder="sazawa">
+    <h1>Please enter all fields below:</h1>
+    <form id='form' action='/register' method="POST">
+      <input name="username" type="text" placeholder="Username">
+      <input name="email" type="email" placeholder="Email">
+      <input name="password" type="password" placeholder="Password">
       <button>Enter</button>
     </form>
+
+    <%= locals.errorMessage %>
   </div>
 
 
