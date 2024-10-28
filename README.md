@@ -5,6 +5,7 @@ Goals of this project:
 2) Make a global messaging system (complete 2024-10-28)
 3) Make a rooms system, where only two people can talk with each other (in progress) 
 4) Make the rooms system a game.
+5) Make the UI actually likeable.
 
 What I've learnt so far:
 1) a basic knowledege of sessions (this kinda reminds me of roblox development, where I did similar server-side session management)
