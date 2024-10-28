@@ -24,7 +24,6 @@ router.post('/', async (req, res) => {
     if (user[0].id == null) {
       res.render('login', { errorMessage: 'Wrong password or username! Dont have an account?'})
     } else {
-      console.log('found user', user)
       req.session.user = { id:user.id, username: req.body.username };
       res.redirect('/gameroom')
     }

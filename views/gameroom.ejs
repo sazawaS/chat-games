@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+ 
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
@@ -75,6 +77,16 @@
       background-color:rgba(255,255,255,0.4)
     }
 
+    .text {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color:rgba(255,255,255,0.4);
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+
     .sender, .message {
       display: block;
       margin-bottom: 5px;
@@ -87,6 +99,7 @@
       background-color: rgb(255, 255, 255);
       position:fixed;
       bottom:0;
+      left:10vw;
       padding: 10px 20px;
       margin-bottom: 15px;
     }
@@ -117,25 +130,41 @@
     </ul>
   </nav>
 
-  <div class="container">
+  <div class="container" id="container">
 
     <% messages.forEach(message => { %>
-      <div class="message">
-        <label class="sender"><%= message.username %></label>
-        <label class="message"> <%= message.text %> </label>
-      </div>
+      <% if (message.text) { %> 
+        <div class="message">
+          <label class="sender"><%= message.username %></label>
+          <label class="text"> <%= message.text %> </label>
+        </div>
+      <% } %>
     <% }); %>
 
-    <form class="sendMessage">
-      <textarea rows="3" name="text" placeholder="Message..."></textarea>
-      <button type="submit">Send</button>
-    </form>
+
   </div>
+  <form class="sendMessage">
+    <textarea rows="3" name="text" placeholder="Message..."></textarea>
+    <button type="submit">Send</button>
+  </form>
+
+  <script src="/socket.io/socket.io.js"></script>
 
   <script>
 
-    var form = document.querySelector("form")
-    form.addEventListener('submit', (e) => {
+
+    const socket = io()
+
+    socket.on('connect', () => {
+      addMessage("[SERVER]",'You are now connected to GLOBAL CHAT.')
+    })
+    socket.on('disconnect', () => {
+      addMessage("[SERVER]",'Warning: Disconnected from GLOBAL CHAT.')
+    })
+
+
+    const form = document.querySelector("form")
+    form.addEventListener('submit', async (e) => {
       e.preventDefault()
 
       const urlSearchParams = new URLSearchParams(window.location.search);
@@ -145,18 +174,66 @@
         text: document.querySelector("textarea").value,
       }
       var post = JSON.stringify(data);
-      console.log(data)
-      
-      fetch("/gameroom", {
-        method: 'POST',
-        body: post,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+    
+      try {
+        const response= await fetch("/gameroom", {
+          method: 'POST',
+          body: post,
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })  
+
+        const json = await response.json();
+        updateMessages(json.messages)
+        
+      } catch(error) {
+        console.log(error);
+      }
+
+
 
     })
+
+    //Make a message
+    function addMessage(username, text) {
+      const container = document.getElementById("container")
+
+      const div = document.createElement('div')
+      div.className="message"
+      container.appendChild(div)
+
+      const sender = document.createElement('label')
+      sender.className = "sender"
+      sender.innerHTML = username
+      div.appendChild(sender)
+    
+      const texte = document.createElement('label')
+      texte.className = "text"
+      texte.innerHTML = text
+      div.appendChild(texte)      
+    }
+
+    function updateMessages(messages) {
+      document.getElementById("container").remove()
+
+      const container = document.createElement("div")
+      container.className = "container"
+      container.id = "container"
+      document.body.appendChild(container)
+
+      messages.forEach(message => {
+        if (message.text) {
+          addMessage(message.username, message.text)
+        }
+      })
+    }
+
+    socket.on('newMessage', message => {
+      addMessage(message.username, message.text)
+    })
+
   </script>
 </body>
 </html>

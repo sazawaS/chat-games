@@ -4,9 +4,11 @@ if (process.env.NODE_ENV !== 'production') {
 
 
 const express = require('express')
-const mongoose = require('mongoose')
 const app = express()
-const session = require('express-session');
+const ejs = require('ejs')
+const session = require('express-session')
+const mongoose = require('mongoose')
+
 
 const joinRouter = require('./routes/join');
 const registerRouter = require('./routes/register');
@@ -21,6 +23,10 @@ app.use(session({
   saveUninitialized: false
 }));
 
+app.use(function(req, res, next) {
+  req.io = io;
+  next();
+});
 
 app.get("/", (req, res) => {
   res.render('index')
@@ -40,8 +46,12 @@ const db = mongoose.connection
 db.on("error", (error) => console.error(error)); 
 db.once('open', () => console.log("Database connection success"))
 
+const server = app.listen(process.env.PORT || 8080);
+const io = require('socket.io')(server);
+io.on("connection", socket => {
+  console.log(socket.id)
+})
+
 app.use("/join", joinRouter)
 app.use("/register", registerRouter)
 app.use("/gameroom", gameroomRouter)
-
-app.listen(process.env.PORT || 3000);
