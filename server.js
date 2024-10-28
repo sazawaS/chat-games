@@ -29,16 +29,12 @@ app.use(function(req, res, next) {
 });
 
 app.get("/", (req, res) => {
-  res.render('index')
+  res.render('index', {myName: req.session.user.username})
+})
 
-  //If player is in homepage, destroy the session
-  req.session.destroy((err) => {
-    if (err) {
-      console.error('Error destroying session:', err);
-    } else {
-      console.log('Session destroyed');
-    }
-  })
+app.get("/logout", (req, res) => {
+  req.session.user = {};
+  res.redirect("/")
 })
 
 mongoose.connect(process.env.DATABASE_URL)
@@ -49,7 +45,6 @@ db.once('open', () => console.log("Database connection success"))
 const server = app.listen(process.env.PORT || 8080);
 const io = require('socket.io')(server);
 io.on("connection", socket => {
-  console.log(socket.id)
 })
 
 app.use("/join", joinRouter)

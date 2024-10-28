@@ -10,7 +10,7 @@ router.get('/',checkUser, async (req, res) => {
 
   try {
     const messages = await Message.find({})
-    res.render("gameroom", {messages:messages})
+    res.render("gameroom", {messages:messages, myName:req.session.user.username})
 
   } catch {
     console.error("failed getting all messages")
@@ -34,10 +34,6 @@ router.post('/',checkUser, async (req, res) => {
   }
 })
 
-
-function filterOrdersByTime() {
-
-}
 
 //Middleware to see if user is logged in or not.
 async function checkUser (req, res, next) {

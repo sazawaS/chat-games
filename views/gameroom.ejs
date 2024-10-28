@@ -9,14 +9,163 @@
   <title>Document</title>
   <style>
 
+/* Reset some default styles */
+body, h1, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Body background gradient */
+body {
+    background-image: linear-gradient(135deg, #658fb9, #adbec9); /* Light gradient for a soft look */
+    font-family: Arial, sans-serif; /* Set a default font-family */
+}
+
+/* Styling the navbar */
+.navbar {
+    background-color: rgb(51, 51, 51); /* Semi-transparent dark background */
+    color: white; /* White text color */
+    position: fixed; /* Fix the navbar at the top */
+    top: 0; /* Align to the top */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.navbar ul {
+    list-style-type: none; /* Remove bullets from the list */
+    justify-content: space-between;
+    display: flex; /* Use flexbox for horizontal layout */
+    align-items: center; /* Center items vertically */
+    padding: 15px; /* Add some padding */
+    max-height: 30px;
+}
+
+
+.navbar h1 {
+    font-size: 24px; /* Font size for the title */
+}
+
+/* Styling the links */
+.navbar a {
+    color: white; /* White text for links */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 15px; /* Add padding around links */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+/* Hover effect for links */
+.navbar a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+}
+
+/* Container styling */
+.container {
+
+  width:80%;
+    margin-top: 60px; /* Add a top margin to avoid overlap with navbar */
+    padding: 20px; /* Add padding */
+}
+
+/* Fixed message section styling */
+#container {
+    margin: 0 auto;
+    background-color: #bbc5c9c9; /* Light background color for the message box */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 15px; /* Padding inside the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+
+/* Message class animation */
+  .message {
+    
+    background-color: rgba(255, 255, 255, 0.8); /* Light background */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    animation: slideIn 0.5s forwards; /* Apply the slide-in animation */
+  }
+
+    .text {
+      border: 0 solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      margin-bottom: 5px;
+    }
+
+    .sender, .message {
+      display:block;
+      margin-bottom: 5px;
+    }
+
+/* Slide-in animation definition */
+@keyframes slideIn {
+    from {
+        transform: translateY(100px); /* Start from 100px below */
+        opacity: 0; /* Start with opacity 0 */
+    }
+    to {
+        transform: translateY(0); /* End at original position */
+        opacity: 1; /* End with opacity 1 */
+    }
+}
+
+/* Button styling with animation */
+.sendMessage button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Transition for background and transform */
+    margin-left:10px;
+}
+
+/* Button hover effect */
+.sendMessage button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly grow the button */
+}
+
+/* Styling for the send message section */
+.sendMessage {
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.9); /* Light background */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    display: flex; /* Flexbox for layout */
+    align-items: center; /* Center items vertically */
+}
+
+/* Input field style in the send message section */
+.sendMessage input {
+    flex: 1; /* Take up remaining space */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding inside input */
+    margin-right: 10px; /* Margin to separate from button */
+}
+
+textarea {
+  resize: none;
+}
+
+      
+
+    /*
     body {
       background-image:linear-gradient(135deg,rgb(82, 82, 211),rgb(34, 64, 128));
+      padding:0;
     }
 
     .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
+      
       width: 100%;
       background-color: rgba(0,0,0,0.9);
       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
@@ -28,8 +177,8 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
-      display: flex; /* Use flexbox for horizontal layout */
-      align-items: center; /* Vertically center items */
+      display: flex; 
+      align-items: center;  
     }
 
     .navbar li {
@@ -58,7 +207,7 @@
       color: #fff;
     }
 
-    /*--------------------------------*/
+    --------------------------------
 
     .container {
       width: 80%;
@@ -120,33 +269,45 @@
       margin-left: 20px;
     }
 
+    */
+
+
+
   </style>
 </head>
 <body>
   <nav class="navbar">
     <ul>
-      <li><h1>Chat Games</h1></li>
-      <li><a href="/">Home</a></li>
+      <h1>Chat Games</h1>
+      <li class="middle"><a href="/">Home</a></li>
+      <% if(locals.myName) { %>
+        <p> Logged in as <%= locals.myName %>. <a href="/logout">Logout</a> </p>
+      <% } else {%>
+        <p> Not logged in. %> <a href="/register">Register</a> </p>
+      <% } %>
     </ul>
+    
   </nav>
 
   <div class="container" id="container">
 
-    <% messages.forEach(message => { %>
-      <% if (message.text) { %> 
-        <div class="message">
-          <label class="sender"><%= message.username %></label>
-          <label class="text"> <%= message.text %> </label>
-        </div>
-      <% } %>
-    <% }); %>
+    <div id="messages">
+      <% messages.forEach(message => { %>
+        <% if (message.text) { %> 
+          <div class="message">
+            <label class="sender"><%= message.username %></label> 
+            <label class="text"> <%= message.text %> </label>
+          </div>
+        <% } %>
+      <% }); %>
+    </div>
 
-
+    <form class="sendMessage">
+      <textarea rows="3" cols="30" name="text" id='textInput' placeholder="Message..."></textarea>
+      <button type="submit">Send</button>
+    </form>
   </div>
-  <form class="sendMessage">
-    <textarea rows="3" name="text" placeholder="Message..."></textarea>
-    <button type="submit">Send</button>
-  </form>
+
 
   <script src="/socket.io/socket.io.js"></script>
 
@@ -164,17 +325,33 @@
 
 
     const form = document.querySelector("form")
-    form.addEventListener('submit', async (e) => {
+    const textInput = document.getElementById("textInput")
+    form.addEventListener('submit', (e) => {
       e.preventDefault()
+      POST()
+    })
 
-      const urlSearchParams = new URLSearchParams(window.location.search);
+    //KeyPress Enter
+    textInput.addEventListener("keypress", (e) => {
+      if (e.keyCode == 13) {
+        e.preventDefault()
+        POST()
+      }
+    });
 
-      var formData = new FormData(e.target)
+
+    //Send the POST method to server
+    async function POST() {
+      if (textInput.value == "") {return;}
+
+      var formData = new FormData(form)
       var data = {
         text: document.querySelector("textarea").value,
       }
       var post = JSON.stringify(data);
-    
+      textInput.value = ""
+      textInput.focus()
+
       try {
         const response= await fetch("/gameroom", {
           method: 'POST',
@@ -184,25 +361,19 @@
             'Content-Type': 'application/json'
           }
         })  
-
-        const json = await response.json();
-        updateMessages(json.messages)
-        
       } catch(error) {
         console.log(error);
       }
-
-
-
-    })
+    }
 
     //Make a message
     function addMessage(username, text) {
-      const container = document.getElementById("container")
+      const messages = document.getElementById("messages")
 
       const div = document.createElement('div')
       div.className="message"
-      container.appendChild(div)
+      div.id="message"
+      messages.append(div)
 
       const sender = document.createElement('label')
       sender.className = "sender"
@@ -212,23 +383,10 @@
       const texte = document.createElement('label')
       texte.className = "text"
       texte.innerHTML = text
-      div.appendChild(texte)      
+      div.appendChild(texte)
+      window.scrollBy(0, 100);      
     }
 
-    function updateMessages(messages) {
-      document.getElementById("container").remove()
-
-      const container = document.createElement("div")
-      container.className = "container"
-      container.id = "container"
-      document.body.appendChild(container)
-
-      messages.forEach(message => {
-        if (message.text) {
-          addMessage(message.username, message.text)
-        }
-      })
-    }
 
     socket.on('newMessage', message => {
       addMessage(message.username, message.text)

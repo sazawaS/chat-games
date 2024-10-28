@@ -8,6 +8,11 @@ const Message = require("../models/message")
 
 router.get('/', (req, res) => {
   
+  if (req.session.user && req.session.user.username) {
+    console.log('is logged in!')
+    res.redirect("/gameroom")
+    return;
+  }
   res.render('login')
 })
 

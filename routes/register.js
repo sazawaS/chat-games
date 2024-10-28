@@ -4,7 +4,7 @@ const router = express.Router()
 const User = require('../models/user')
 
 router.get("/", (req, res) => {
-  res.render('register')
+  res.render('register', {myName:req.session.user.username})
 })
 
 
@@ -43,7 +43,8 @@ router.post("/", async (req, res) => {
     })
 
     await user.save()
-    console.log(user)
+    res.redirect("/join")
+
   } catch {
     console.log("Failed")
   }

@@ -7,54 +7,54 @@
   <title>Document</title>
   <style>
 
-    body {
-      background-image:linear-gradient(135deg,rgb(82, 82, 211),rgb(34, 64, 128));
-    }
+/* Reset some default styles */
+body, h1, ul {
+    margin: 0;
+    padding: 0;
+}
 
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: rgba(0,0,0,0.9);
-      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-      z-index: 999;
-    }
+/* Body background gradient */
+body {
+    background-image: linear-gradient(135deg, #658fb9, #adbec9); /* Light gradient for a soft look */
+    font-family: Arial, sans-serif; /* Set a default font-family */
+}
 
-    .navbar ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      display: flex; /* Use flexbox for horizontal layout */
-      align-items: center; /* Vertically center items */
-    }
+/* Styling the navbar */
+.navbar {
+    background-color: rgb(51, 51, 51); /* Semi-transparent dark background */
+    color: white; /* White text color */
+    position: fixed; /* Fix the navbar at the top */
+    top: 0; /* Align to the top */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it's above other elements */
+}
 
-    .navbar li {
-      float: none; 
-      margin-left: 10px;
-    }
+.navbar ul {
+    list-style-type: none; /* Remove bullets from the list */
+    justify-content: space-between;
+    display: flex; /* Use flexbox for horizontal layout */
+    align-items: center; /* Center items vertically */
+    padding: 15px; /* Add some padding */
+    max-height: 30px;
+}
 
-    .navbar li h1 {
-      color: #fff;
-      margin: 0; 
-      font-size: 24px;
-    }
 
-    .navbar li a {
-      display: block;
-      color: #fff;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-      font-size: 16px;
-      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-    }
+.navbar h1 {
+    font-size: 24px; /* Font size for the title */
+}
 
-    .navbar li a:hover {
-      background-color: #333;
-      color: #fff;
-    }
+/* Styling the links */
+.navbar a {
+    color: white; /* White text for links */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 15px; /* Add padding around links */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+/* Hover effect for links */
+.navbar a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+}
 
     /*----------------------------------------*/
 
@@ -103,9 +103,14 @@
 <body>
   <nav class="navbar">
     <ul>
-      <li><h1>Chat Games</h1></li>
+      <h1>Chat Games</h1>
       <li><a href="/">Home</a></li>
-  </ul>
+      <% if(locals.myName) { %>
+        <p> Logged in as <%= locals.myName %>. <a href="/logout">Logout</a> </p>
+      <% } else {%>
+        <p> Not logged in. %> <a href="/register">Register</a> </p>
+      <% } %>
+    </ul>
   </nav>
 
 
