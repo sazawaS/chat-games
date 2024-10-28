@@ -29,7 +29,11 @@ app.use(function(req, res, next) {
 });
 
 app.get("/", (req, res) => {
-  res.render('index', {myName: req.session.user.username})
+  if (req.session.user ) {
+    res.render('index', {myName: req.session.user.username})
+    return;
+  }
+  res.render('index')
 })
 
 app.get("/logout", (req, res) => {

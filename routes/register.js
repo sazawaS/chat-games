@@ -4,7 +4,11 @@ const router = express.Router()
 const User = require('../models/user')
 
 router.get("/", (req, res) => {
-  res.render('register', {myName:req.session.user.username})
+  if (req.session.user ) {
+    res.render('register', {myName:req.session.user.username})
+    return;
+  }
+  res.render('register')
 })
 
 

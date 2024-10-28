@@ -10,7 +10,11 @@ router.get('/',checkUser, async (req, res) => {
 
   try {
     const messages = await Message.find({})
-    res.render("gameroom", {messages:messages, myName:req.session.user.username})
+    if (req.session.user ) {
+      res.render("gameroom", {messages:messages, myName:req.session.user.username})
+      return;
+    }
+    res.render("gameroom", {messages:messages})
 
   } catch {
     console.error("failed getting all messages")
