@@ -1,4 +1,4 @@
-This is my second ever project in web development.  https://chat-games.onrender.com/
+This is my second ever project in web development. I fucking suck at UI desiginning.  https://chat-games.onrender.com/
 
 Goals of this project:
 1) Make a user login/register system (complete 2024-10-28)
@@ -9,7 +9,8 @@ Goals of this project:
 
 What I've learnt so far:
 1) a basic knowledege of sessions (this kinda reminds me of roblox development, where I did similar server-side session management but it was much more simpler)
-2) a basic knowledege of sockets (this reminds me of godot's emit function)
+2) a basic knowledege of sockets using socket.io (this reminds me of godot's emit function)
+3) a basic knowledege of multer's api.
 
 Resources:
 1) https://www.geeksforgeeks.org/how-to-handle-sessions-in-express/ (Geeks for geeks provides very straight-to-the point articles, they're very good and resourcefull)
