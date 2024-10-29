@@ -8,8 +8,12 @@ const Message = require('../models/message')
 //See all messages
 router.get('/',checkUser, async (req, res) => {
 
+  const date = new Date()
+  const currentTime = date.getTime()
+
   try {
-    const messages = await Message.find({})
+    
+    const messages = await Message.find({ time: { $gt: currentTime-60000 } })
     if (req.session.user ) {
       res.render("gameroom", {messages:messages, myName:req.session.user.username})
       return;
@@ -24,14 +28,23 @@ router.get('/',checkUser, async (req, res) => {
 //Make new message
 router.post('/',checkUser, async (req, res) => {
 
+  const date = new Date()
   try {
-    const newMessage = new Message({
-      username: req.session.user.username,
-      text:req.body.text
-    })
-    newMessage.save()
 
-    req.io.emit('newMessage', newMessage);
+
+    const user = await User.find({username: req.session.user.username})
+
+    if (user[0]) {
+      const newMessage = new Message({
+        username: req.session.user.username,
+        text:req.body.text,
+        time: date.getTime(),
+        pfp: user[0].pfp,
+      })
+      await newMessage.save()
+      req.io.emit('newMessage', newMessage);
+
+    }
   
   } catch (error) {
     console.error("failed sending new message", error)

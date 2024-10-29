@@ -88,6 +88,8 @@ body, h1, ul {
 }
     body {
       background-image:linear-gradient(135deg,rgb(82, 82, 211),rgb(34, 64, 128));
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Arial, sans-serif;
+
     }
 
 
@@ -143,7 +145,7 @@ body, h1, ul {
       <% if(locals.myName) { %>
         <p> Logged in as <%= locals.myName %>. <a href="/logout">Logout</a> </p>
       <% } else {%>
-        <p> Not logged in. %> <a href="/register">Register</a> <a href="/join">Login</a> </p>
+        <p> Not logged in. %> <a href="/join">Login</a> </p>
       <% } %>
   </ul>
   </nav>

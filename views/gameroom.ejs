@@ -17,8 +17,8 @@ body, h1, ul {
 
 /* Body background gradient */
 body {
-    background-image: linear-gradient(135deg, #658fb9, #adbec9); /* Light gradient for a soft look */
-    font-family: Arial, sans-serif; /* Set a default font-family */
+  background-color: rgb(44, 44, 44); /* Semi-transparent dark background */
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Arial, sans-serif;
 }
 
 /* Styling the navbar */
@@ -60,17 +60,19 @@ body {
 
 /* Container styling */
 .container {
-
+  position: relative;
+  top:70px;
   width:80%;
-    margin-top: 60px; /* Add a top margin to avoid overlap with navbar */
-    padding: 20px; /* Add padding */
+  padding: 20px; /* Add padding */
+  background-color: rgb(53, 53, 53); /* Light background */
 }
 
 /* Fixed message section styling */
 #container {
     margin: 0 auto;
-    background-color: #bbc5c9c9; /* Light background color for the message box */
-    border: 1px solid #ccc; /* Light border */
+    background-color: rgb(53, 53, 53); /* Light background */
+
+    border: 1px solid #7a7a7a; /* Light border */
     border-radius: 5px; /* Rounded corners */
     padding: 15px; /* Padding inside the container */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
@@ -80,20 +82,39 @@ body {
 /* Message class animation */
   .message {
     
-    background-color: rgba(255, 255, 255, 0.8); /* Light background */
-    border: 1px solid #ccc;
+    background-color: rgba(102, 102, 102, 0.5); /* Light background */
     border-radius: 4px;
     padding: 10px;
     margin-bottom: 10px;
+    text-wrap: wrap;
+    overflow-wrap: anywhere;
 
     animation: slideIn 0.5s forwards; /* Apply the slide-in animation */
   }
 
     .text {
       border: 0 solid #ccc;
-      padding: 10px;
       margin-bottom: 10px;
       margin-bottom: 5px;
+    }
+
+    .sender, .text {
+      margin-left:55px;
+      color:white;
+    }
+
+    .sender {
+      font-weight: 500;
+    }
+    .text {
+      font-weight:400;
+    }
+    
+    .pfp {
+      position:absolute;
+      width:46px;
+      height:46px;
+      border-radius: 50%;
     }
 
     .sender, .message {
@@ -105,10 +126,12 @@ body {
 @keyframes slideIn {
     from {
         transform: translateY(100px); /* Start from 100px below */
+        width:0%;
         opacity: 0; /* Start with opacity 0 */
     }
     to {
         transform: translateY(0); /* End at original position */
+        width:auto;
         opacity: 1; /* End with opacity 1 */
     }
 }
@@ -134,8 +157,7 @@ body {
 /* Styling for the send message section */
 .sendMessage {
     margin-top: 10px;
-    background-color: rgba(255, 255, 255, 0.9); /* Light background */
-    border: 1px solid #ccc; /* Light border */
+    background-color: rgba(102, 102, 102, 0.5); /* Light background */
     border-radius: 5px; /* Rounded corners */
     padding: 10px; /* Padding */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow effect */
@@ -146,131 +168,26 @@ body {
 /* Input field style in the send message section */
 .sendMessage input {
     flex: 1; /* Take up remaining space */
-    border: 1px solid #ccc; /* Light border */
     border-radius: 5px; /* Rounded corners */
     padding: 10px; /* Padding inside input */
     margin-right: 10px; /* Margin to separate from button */
 }
 
 textarea {
+  
+  flex: 1; /* Take up remaining space */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding inside input */
+    margin-right: 10px; /* Margin to separate from button */
+    background-color: rgba(141, 141, 141, 0.384);
+    color: #fff;
+
   resize: none;
 }
 
       
 
-    /*
-    body {
-      background-image:linear-gradient(135deg,rgb(82, 82, 211),rgb(34, 64, 128));
-      padding:0;
-    }
-
-    .navbar {
-      
-      width: 100%;
-      background-color: rgba(0,0,0,0.9);
-      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-      z-index: 999;
-    }
-
-    .navbar ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      display: flex; 
-      align-items: center;  
-    }
-
-    .navbar li {
-      float: none; 
-      margin-left: 10px;
-    }
-
-    .navbar li h1 {
-      color: #fff;
-      margin: 0; 
-      font-size: 24px;
-    }
-
-    .navbar li a {
-      display: block;
-      color: #fff;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-      font-size: 16px;
-      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-    }
-
-    .navbar li a:hover {
-      background-color: #333;
-      color: #fff;
-    }
-
-    --------------------------------
-
-    .container {
-      width: 80%;
-      margin: 0 auto;
-      margin-top: 60px;
-      display:flex;
-      flex-direction: column;
-      max-height: 70%;
-      padding-bottom: 100px;
-    }
-
-    .message {
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin-bottom: 10px;
-      background-color:rgba(255,255,255,0.4)
-    }
-
-    .text {
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin-bottom: 10px;
-      background-color:rgba(255,255,255,0.4);
-      display: block;
-      margin-bottom: 5px;
-    }
-    
-
-    .sender, .message {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .sendMessage {
-      display:flex;
-      flex-direction: row;
-      width:76%;
-      background-color: rgb(255, 255, 255);
-      position:fixed;
-      bottom:0;
-      left:10vw;
-      padding: 10px 20px;
-      margin-bottom: 15px;
-    }
-
-    .sendMessage textarea {
-      width: 90%;
-      font-size: 16px;
-      resize:none;
-    }
-
-    .sendMessage button {
-      padding:10px 40px;
-      background-color: #04AA6D;
-      color: #fff;
-      border: 1px;
-      border-radius: 2px;
-      cursor: pointer;
-      margin-left: 20px;
-    }
-
-    */
-
+  
 
 
   </style>
@@ -281,7 +198,7 @@ textarea {
       <h1>Chat Games</h1>
       <li class="middle"><a href="/">Home</a></li>
       <% if(locals.myName) { %>
-        <p> Logged in as <%= locals.myName %>. <a href="/logout">Logout</a> </p>
+        <p> Logged in: <%= locals.myName %> <a href="/logout">Logout</a> </p>
       <% } else {%>
         <p> Not logged in. %> <a href="/register">Register</a> </p>
       <% } %>
@@ -295,8 +212,13 @@ textarea {
       <% messages.forEach(message => { %>
         <% if (message.text) { %> 
           <div class="message">
+            <% if (message.pfp) { %>
+              <image src=<%= message.pfp %> class="pfp"></image>
+            <% } else {%>
+              <image src="http://localhost:8080/assets/DefaultPFP.jpg" class="pfp"></image>
+            <% } %>
             <label class="sender"><%= message.username %></label> 
-            <label class="text"> <%= message.text %> </label>
+            <label class="text"><%= message.text %></label>
           </div>
         <% } %>
       <% }); %>
@@ -367,13 +289,22 @@ textarea {
     }
 
     //Make a message
-    function addMessage(username, text) {
+    function addMessage(username, text, img) {
       const messages = document.getElementById("messages")
 
       const div = document.createElement('div')
       div.className="message"
       div.id="message"
       messages.append(div)
+
+      console.log(img)
+      if (username != "[SERVER]") {
+
+        const pfp = document.createElement('img')
+        pfp.className = "pfp"
+        pfp.src = img
+        div.appendChild(pfp)
+      }
 
       const sender = document.createElement('label')
       sender.className = "sender"
@@ -385,11 +316,16 @@ textarea {
       texte.innerHTML = text
       div.appendChild(texte)
       window.scrollBy(0, 100);      
+
+      if (username == "[SERVER]") {
+        sender.style.marginLeft = 0;
+        texte.style.marginLeft = 0;
+      }
     }
 
 
     socket.on('newMessage', message => {
-      addMessage(message.username, message.text)
+      addMessage(message.username, message.text, message.pfp)
     })
 
   </script>

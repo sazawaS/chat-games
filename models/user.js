@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
   },
   password:{
     type:String
+  },
+  pfp: {
+    type: String,
+    default: "http://localhost:8080/assets/DefaultPFP.jpg",
   }
 })
 

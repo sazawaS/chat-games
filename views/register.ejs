@@ -15,7 +15,7 @@ body, h1, ul {
 /* Body background gradient */
 body {
     background-image: linear-gradient(135deg, #658fb9, #adbec9); /* Light gradient for a soft look */
-    font-family: Arial, sans-serif; /* Set a default font-family */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Arial, sans-serif;
 }
 
 /* Styling the navbar */
@@ -69,7 +69,9 @@ body {
     }
 
     h1 {
-      text-size:20px;
+      font-size:2.5vw;
+      margin-top:10px;
+      margin-bottom: 20px;
     }
 
     form {
@@ -83,7 +85,10 @@ body {
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 5px; 
+    }
 
+    input[name="avatar"] {
+      margin-left: 75px;
     }
 
     button {
@@ -94,7 +99,7 @@ body {
       border-radius: 5px;
       margin-top:10px;
       cursor: pointer;
-
+      margin-bottom:10px;
     }
 
   </style>
@@ -114,12 +119,15 @@ body {
 
 
   <div class="container">
-    <h1>Please enter all fields below:</h1>
-    <form id='form' action='/register' method="POST">
-      <input name="username" type="text" placeholder="Username">
-      <input name="email" type="email" placeholder="Email">
-      <input name="password" type="password" placeholder="Password">
-      <button>Enter</button>
+    <h1>Please enter the fields below:</h1>
+    <form id='form' enctype="multipart/form-data" action='/register'  method="POST">
+      <input pattern="^[0-9a-zA-Z]+$" name="username" type="text" required placeholder="Username">
+      <input name="email" type="email" required placeholder="Email">
+      <input name="password" type="password" required placeholder="Password">
+      <br>
+      <label>Choose a profile picture (optional):</label>
+      <input name="avatar" type="file" accept="image/*">
+      <button type="submit">Submit</button>
     </form>
 
     <% if (locals.errorMessage) {%>

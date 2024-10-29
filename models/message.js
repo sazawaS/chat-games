@@ -6,6 +6,12 @@ const messageSchema = new mongoose.Schema({
   },
   text:{
     type:String
+  },
+  time: {
+    type:Number,
+  },
+  pfp : {
+    type:String,
   }
 })
 

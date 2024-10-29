@@ -10,11 +10,13 @@ const session = require('cookie-session')
 const mongoose = require('mongoose')
 
 
+
 const joinRouter = require('./routes/join');
 const registerRouter = require('./routes/register');
 const gameroomRouter = require('./routes/gameroom');
 
 app.set('view engine', 'ejs');
+app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json())
 app.use(session({
@@ -54,3 +56,5 @@ io.on("connection", socket => {
 app.use("/join", joinRouter)
 app.use("/register", registerRouter)
 app.use("/gameroom", gameroomRouter)
+
+
