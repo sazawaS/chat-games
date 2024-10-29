@@ -6,7 +6,7 @@ const path = require('path')
 const User = require('../models/user')
 
 router.get("/", (req, res) => {
-  if (req.session.user ) {
+  if (req.session.user && req.session.username != "" ) {
     res.redirect('/gameroom')
     return;
   }
