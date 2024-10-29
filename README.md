@@ -1,4 +1,4 @@
-This is my second ever project in web development. I fucking suck at UI desiginning.  https://chat-games.onrender.com/
+This is my second ever project in web development and I suck at UI desiginning.  https://chat-games.onrender.com/
 
 Goals of this project:
 1) Make a user login/register system (complete 2024-10-28)
