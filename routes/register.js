@@ -76,7 +76,12 @@ router.post("/", upload.single('avatar'), async (req, res) => {
 
 
   try {
-    var link = "http://localhost:"
+    var link = ""
+    if (process.env.NODE_ENV == 'production') {
+      link = "https://localhost:"
+    } else {
+      link = "http://localhost:"
+    }
     if (process.env.PORT) {
       link = link + process.env.PORT + "/uploads/"
     } else {
