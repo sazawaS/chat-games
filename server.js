@@ -2,7 +2,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-console.log(process.env.NODE_ENV)
 
 const express = require('express')
 const app = express()
@@ -52,6 +51,8 @@ db.once('open', () => console.log("Database connection success"))
 const server = app.listen(process.env.PORT || 8080);
 const io = require('socket.io')(server);
 io.on("connection", socket => {
+  console.log(process.env.NODE_ENV)
+
 })
 
 app.use("/join", joinRouter)
