@@ -196,7 +196,7 @@ textarea {
       <h1>Chat Games</h1>
       <li class="middle"><a href="/">Home</a></li>
       <% if(locals.myName) { %>
-        <p> Logged in: <%= locals.myName %> <a href="/logout">Logout</a> </p>
+        <p> Logged in: <a href="/users/me"> <%= locals.myName %> </a> <a href="/logout">Logout</a> </p>
       <% } else {%>
         <p> Not logged in. %> <a href="/register">Register</a> </p>
       <% } %>

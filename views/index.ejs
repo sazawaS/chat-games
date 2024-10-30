@@ -143,7 +143,7 @@ body, h1, ul {
       <li><a href="/join">Join</a> </li>
 
       <% if(locals.myName) { %>
-        <p> Logged in as <%= locals.myName %>. <a href="/logout">Logout</a> </p>
+        <p> Logged in: <a href="/users/me"> <%= locals.myName %> </a> <a href="/logout">Logout</a> </p>
       <% } else {%>
         <p> Not logged in. %> <a href="/join">Login</a> </p>
       <% } %>

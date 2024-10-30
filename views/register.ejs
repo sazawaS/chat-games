@@ -14,9 +14,9 @@ body, h1, ul {
 
 /* Body background gradient */
 body {
-    background-image: linear-gradient(135deg, #658fb9, #adbec9); /* Light gradient for a soft look */
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Arial, sans-serif;
-}
+      background-color: rgb(44, 44, 44); /* Semi-transparent dark background */
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Arial, sans-serif;
+    }
 
 /* Styling the navbar */
 .navbar {
@@ -62,15 +62,17 @@ body {
       margin: 0 auto;
       margin-top: 10rem;
       text-align:center;
-      background-color: rgba(255,255,255,0.5);
-      border: 2px solid #ccc;
-      border-radius: 3px;
+      background-color: rgb(53, 53, 53); /* Light background */
+      border: 1px solid #7a7a7a; /* Light border */
+      border-radius: 5px; /* Rounded corners */
       padding:10px 0px;
     }
 
     h1 {
       font-size:2.5vw;
       margin-top:10px;
+      color:white;
+
       margin-bottom: 20px;
     }
 
@@ -88,7 +90,17 @@ body {
     }
 
     input[name="avatar"] {
-      margin-left: 75px;
+      display:none;
+      width:200px;
+      height:200px;
+    }
+
+    label[for="pfp"] {
+      background-color: rgb(38, 38, 38);
+      font-size: small;
+      padding:10px 20px;
+      border-radius:5px;
+      color: rgb(213, 213, 213)
     }
 
     button {
@@ -125,8 +137,8 @@ body {
       <input name="email" type="email" required placeholder="Email">
       <input name="password" type="password" required placeholder="Password">
       <br>
-      <label>Choose a profile picture (optional):</label>
-      <input name="avatar" accept=".jpg, .jpeg, .png, .gif" type="file" accept="image/*">
+      <label for="pfp" id="pfplabel">Choose a profile picture (optional): </label>
+      <input name="avatar" id="pfp" accept=".jpg, .jpeg, .png, .gif" type="file" accept="image/*">
       <button type="submit">Submit</button>
     </form>
 
@@ -136,6 +148,12 @@ body {
       <%= locals.errorMessage %> <a href="/join">Login Here</a>
     <% } %>
   </div>
+
+  <script>
+    document.getElementById('pfp').addEventListener('change', (event) => {
+      document.getElementById('pfplabel').innerHTML += document.getElementById('pfp').files[0].name;
+    })
+  </script>
 
 
 

@@ -15,9 +15,9 @@ body, h1, ul {
 
 /* Body background gradient */
 body {
-    background-image: linear-gradient(135deg, #658fb9, #adbec9); /* Light gradient for a soft look */
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Arial, sans-serif;
-}
+      background-color: rgb(44, 44, 44); /* Semi-transparent dark background */
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Arial, sans-serif;
+    }
 
 /* Styling the navbar */
 .navbar {
@@ -63,17 +63,28 @@ body {
       margin: 0 auto;
       margin-top: 10rem;
       text-align:center;
-      background-color: rgba(255,255,255,0.5);
-      border: 2px solid #ccc;
-      border-radius: 3px;
+      background-color: rgb(53, 53, 53); /* Light background */
+      border: 1px solid #7a7a7a; /* Light border */
+      border-radius: 5px; /* Rounded corners */
       padding:10px 0px;
     }
 
     h1 {
+      color:white;
       margin-top:10px;
 
       font-size:2.5vw;
       margin-bottom: 20px;
+    }
+
+    a {
+      text-underline-offset:100000000px;
+      color: white;
+    }
+
+    #errorMessage {
+      color: rgb(218, 218, 218);
+
     }
 
     form {
@@ -113,7 +124,7 @@ body {
       <h1>Chat Games</h1>
       <li><a href="/">Home</a></li>
       <% if(locals.myName) { %>
-        <p> Logged in as <%= locals.myName %>. <a href="/logout">Logout</a> </p>
+        <p> Logged in:<a href="/users/me"> <%= locals.myName %> </a> <a href="/logout">Logout</a> </p>
       <% } else {%>
         <p> Not logged in. %> <a href="/login">Login</a> </p>
       <% } %>
@@ -129,8 +140,7 @@ body {
       <button>Enter</button>
     </form>
 
-    <%= locals.errorMessage || '' %>
-    <a href="/register">Register Here</a>
+    <p id="errorMessage"> <%= locals.errorMessage || '' %>     <a href="/register">Register Here</a>    </p>
   </div>
 
 
