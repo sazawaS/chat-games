@@ -5,16 +5,6 @@ const path = require('path')
 
 const User = require('../models/user')
 
-router.get("/", (req, res) => {
-
-  if (req.session.user.username !== undefined ) {
-    res.redirect('/gameroom')
-    return;
-  }
-  res.render('register')
-})
-
-
 
 const storage = multer.diskStorage({
   destination: function ( req, file, cb ) {
@@ -39,6 +29,17 @@ const upload = multer({
 })
 
 
+router.get("/", (req, res) => {
+
+  if (req.session.user.username !== undefined ) {
+    res.redirect('/gameroom')
+    return;
+  }
+  res.render('register')
+})
+
+
+
 
 //Create account
 router.post("/", upload.single('avatar'), async (req, res) => {
@@ -53,8 +54,8 @@ router.post("/", upload.single('avatar'), async (req, res) => {
     }
 
     var letters = /^[0-9a-zA-Z]+$/;
-    if (!letters.test(req.body.username)) {
-      res.render('register')
+    if (!letters.test(req.body.username) || req.body.username.length < 3 || req.body.username.length > 20) {
+      res.render('register', {warnMessage: "Username is too long or too short!"})
     }
 
   } catch(err) {
@@ -79,25 +80,26 @@ router.post("/", upload.single('avatar'), async (req, res) => {
   try {
     var link = ""
     if (process.env.NODE_ENV == 'production') {
-      link = "https://chat-games.onrender.com/uploads/"
+      link = "https://chat-games.onrender.com/uploads/" 
     } else {
       link = "http://localhost:8080/uploads/"
     }
+    link = link +  req.body.username + '-PFP' + path.extname(req.file.filename);
 
-    console.log(link)
     const user = User({
-      username: req.body.username,
-      email   : req.body.email,
-      password: req.body.password,
-      pfp     : link + req.body.username + '-PFP' + path.extname(req.file.filename),
+      username      : req.body.username,
+      email         : req.body.email,
+      password      : req.body.password,
+      creationDate  : Date.now(),
+      pfp           : link,
     })
 
 
     await user.save()
     res.redirect("/join")
 
-  } catch {
-    console.error("Failed creating new user!")
+  } catch (err) {
+    console.error("Failed creating new user!", err)
   }
 })
 

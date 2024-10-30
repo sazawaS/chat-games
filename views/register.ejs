@@ -126,9 +126,11 @@ body {
       <input name="password" type="password" required placeholder="Password">
       <br>
       <label>Choose a profile picture (optional):</label>
-      <input name="avatar" type="file" accept="image/*">
+      <input name="avatar" accept=".jpg, .jpeg, .png, .gif" type="file" accept="image/*">
       <button type="submit">Submit</button>
     </form>
+
+    <%= locals.warnMessage %>
 
     <% if (locals.errorMessage) {%>
       <%= locals.errorMessage %> <a href="/join">Login Here</a>

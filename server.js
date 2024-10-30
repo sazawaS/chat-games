@@ -10,7 +10,7 @@ const session = require('cookie-session')
 const mongoose = require('mongoose')
 
 
-
+const users = require('./routes/users');
 const joinRouter = require('./routes/join');
 const registerRouter = require('./routes/register');
 const gameroomRouter = require('./routes/gameroom');
@@ -57,5 +57,5 @@ io.on("connection", socket => {
 app.use("/join", joinRouter)
 app.use("/register", registerRouter)
 app.use("/gameroom", gameroomRouter)
-
+app.use("/users", users)
 
