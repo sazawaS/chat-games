@@ -39,6 +39,7 @@ app.get("/", (req, res) => {
 })
 
 app.get("/logout", (req, res) => {
+  console.log("Logging out " + req.session.user.username)
   req.session.user = {};
   res.redirect("/")
 })
