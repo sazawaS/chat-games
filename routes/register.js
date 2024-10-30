@@ -79,14 +79,9 @@ router.post("/", upload.single('avatar'), async (req, res) => {
   try {
     var link = ""
     if (process.env.NODE_ENV == 'production') {
-      link = "https://localhost"
+      link = "https://chat-games.onrender.com/uploads/"
     } else {
-      link = "http://localhost:"
-    }
-    if (process.env.PORT) {
-      link = link + "/uploads/"
-    } else {
-      link = link + "8080/uploads/"
+      link = "http://localhost:8080/uploads/"
     }
 
     console.log(link)
