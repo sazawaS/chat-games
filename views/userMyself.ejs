@@ -132,7 +132,7 @@
   <nav class="container">
 
     <nav class="information">
-      <img class="pfp" src=<%= user.pfp %>>
+      <img alt="Profile Picture" class="pfp" id="pfp" src=<%= user.pfp %>>
       <label><h2>Name:</h2> <p class="info" id="username"><%= user.username %></p> </label>
       <label><h2>Email:</h2> <p class="info"><%= user.email %></p> </label>
       <label><h2>Join Date:</h2> <p class="info"><%= user.creationDate %></p> </label>
@@ -154,10 +154,11 @@
             body: data,
           })
 
-          console.log(response)
+          const json = await response.json();
+          location.reload();
 
         } catch(err) {
-          console.log('failed POST ', err)
+          console.log('failed POST ',  err)
         }
 
       })

@@ -1,37 +1,14 @@
 const express = require("express")
 const router = express.Router()
-const multer = require('multer')
 const path = require('path')
 
 const User = require('../models/user')
-
-
-const storage = multer.diskStorage({
-  destination: function ( req, file, cb ) {
-    cb(null, './public/uploads')
-  },
-  filename: function (req, file, cb ) {
-    const uniqueSuffix = req.body.username + '-PFP';
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
-})
-
-const upload = multer({
-  storage: storage,
-  limits: {fileSize	:1000000}, 
-  fileFilter: function (req, file, cb) {
-    const ext = path.extname(file.originalname)
-    if (ext !== ".png" && ext !== ".jpg" && ext !== ".jpeg" && ext !== '.gif') {
-      return cb(new Error("Only images are allowed."))
-    }
-    cb(null, true)
-  }
-})
+const upload = require('../modules/multerModule')
 
 
 router.get("/", (req, res) => {
 
-  if (req.session.user.username !== undefined ) {
+  if ( req.session.user !== undefined && req.session.user.username !== undefined ) {
     res.redirect('/gameroom')
     return;
   }
@@ -79,12 +56,20 @@ router.post("/", upload.single('avatar'), async (req, res) => {
 
   try {
     var link = ""
-    if (process.env.NODE_ENV == 'production') {
-      link = "https://chat-games.onrender.com/uploads/" 
+
+    if (req.file == undefined) {
+      link = "http://localhost:3000/assets/DefaultPFP.jpg"
     } else {
-      link = "http://localhost:8080/uploads/"
+      if (process.env.NODE_ENV == 'production') {
+        link = "https://chat-games.onrender.com/uploads/" 
+      } else {
+        link = "http://localhost:3000/uploads/"
+      }
+      link = link +  req.body.username + '-PFP' + path.extname(req.file.filename);
     }
-    link = link +  req.body.username + '-PFP' + path.extname(req.file.filename);
+
+
+    console.log(link)
 
     const user = User({
       username      : req.body.username,

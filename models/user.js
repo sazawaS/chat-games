@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
   },
   pfp: {
     type: String,
-    default: "http://localhost:8080/assets/DefaultPFP.jpg",
+    default: "http://localhost:3000/assets/DefaultPFP.jpg",
   }
 })
 

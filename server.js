@@ -49,7 +49,7 @@ const db = mongoose.connection
 db.on("error", (error) => console.error(error)); 
 db.once('open', () => console.log("Database connection success"))
 
-const server = app.listen(process.env.PORT || 8080);
+const server = app.listen(process.env.PORT || 3000);
 const io = require('socket.io')(server);
 io.on("connection", socket => {
 })
