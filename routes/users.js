@@ -4,35 +4,46 @@ const path = require("path")
 const fs = require('fs')
 
 const User = require('../models/user')
-const upload = require('../modules/multerModule')
+const upload = require('../modules/uploadPFP')
 
-route.get('/me', async (req,res) => {
-
+//Redirect to user's profile
+route.get("/me", (req, res) => {
   if (req.session.user == undefined || req.session.user.username == undefined ) {
-    res.redirect("/login")
+    res.redirect("/join")
+    return
   }
+  res.redirect("/users/"+ req.session.user.username )
+}) 
+
+route.get('/:name', async (req, res) => {
+  const name = req.params.name;
 
   try {
-    const user = await User.find( {username: req.session.user.username} )
+    const user = await User.find({username:name})
+    if (user[0] == undefined) {
+      res.redirect("/join")
+    } else {
 
-    const MY = (Date.now() - user[0].creationDate);
-    const days = Math.floor(MY / (1000 * 60 * 60 * 24));
-    const hrs = Math.floor( (MY / (1000 * 60 * 60)) - (days/24) ) 
-    const min = Math.floor( (MY / (1000 * 60)) - (hrs/60) )   
-    
-    const data = {
-      username      : user[0].username,
-      email         : user[0].email,
-      creationDate  : days + " days ago, " + hrs  + " hours ago, " + min + " minutes ago.",
-      pfp           : user[0].pfp
+      const MY = (Date.now() - user[0].creationDate);
+      const days = Math.floor(MY / (1000 * 60 * 60 * 24));
+      const hrs = Math.floor( (MY / (1000 * 60 * 60)) - (days/24) ) 
+      const min = Math.floor( (MY / (1000 * 60)) - (hrs/60) )   
+      
+      const data = {
+        username      : user[0].username,
+        email         : user[0].email,
+        creationDate  : days + " days ago, " + hrs  + " hours ago, " + min + " minutes ago.",
+        pfp           : user[0].pfp
+      }
+
+      const bool = user[0].username === req.session.user.username
+      res.render('userprofile', { user: data, myName:req.session.user.username , CanEdit:bool})
     }
+  } catch {
 
-    res.render('userMyself', { user: data, myName:req.session.user.username })
-
-  } catch (err) {
-    console.log(err) 
   }
-})
+
+}) 
 
 route.post('/me', upload.single('file'), async (req, res) => {
 

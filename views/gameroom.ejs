@@ -102,6 +102,14 @@ body {
       margin-left:55px;
       color:white;
     }
+    .sender a {
+      margin-left:0px;
+      color: white;
+      text-decoration: none;
+    }
+    .sender a:hover {
+      text-decoration: underline;
+    }
 
     .sender {
       font-weight: 500;
@@ -215,7 +223,7 @@ textarea {
             <% } else {%>
               <image src="http://localhost:8080/assets/DefaultPFP.jpg" class="pfp"></image>
             <% } %>
-            <label class="sender"><%= message.username %></label> 
+            <label class="sender"><a href="/users/<%= message.username %>" ><%= message.username %></a></label> 
             <label class="text"><%= message.text %></label>
           </div>
         <% } %>
@@ -304,10 +312,20 @@ textarea {
         div.appendChild(pfp)
       }
 
+
       const sender = document.createElement('label')
       sender.className = "sender"
-      sender.innerHTML = username
       div.appendChild(sender)
+
+      if (username != "[SERVER]") {
+        const a = document.createElement("a")
+        a.href = "/users/"+username
+        a.innerHTML = username
+        sender.append(a)
+      } else {
+        sender.innerHTML = username;
+      }
+
     
       const texte = document.createElement('label')
       texte.className = "text"

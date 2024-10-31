@@ -136,8 +136,10 @@
       <label><h2>Name:</h2> <p class="info" id="username"><%= user.username %></p> </label>
       <label><h2>Email:</h2> <p class="info"><%= user.email %></p> </label>
       <label><h2>Join Date:</h2> <p class="info"><%= user.creationDate %></p> </label>
-      <label id="changePfp" for="input">Change your profile picture!</label>
-      <input id='input' accept=".jpg, .jpeg, .png, .gif" type="file">
+      <% if (locals.CanEdit == true) { %> 
+        <label id="changePfp" for="input">Change your profile picture!</label>
+        <input id='input' accept=".jpg, .jpeg, .png, .gif" type="file">
+      <%} %>
     </nav>
     
     <script>

@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
     cb(null, './public/uploads')
   },
   filename: function (req, file, cb ) {
-    console.log(req)
+    
     const uniqueSuffix = req.body.username + '-PFP';
     cb(null, uniqueSuffix + path.extname(file.originalname));
   }

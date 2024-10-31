@@ -3,7 +3,7 @@ const router = express.Router()
 const path = require('path')
 
 const User = require('../models/user')
-const upload = require('../modules/multerModule')
+const upload = require('../modules/uploadPFP')
 
 
 router.get("/", (req, res) => {
