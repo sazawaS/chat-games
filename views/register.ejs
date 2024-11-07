@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+body, h1, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Body background gradient */
+body {
+      background-color: rgb(44, 44, 44); /* Semi-transparent dark background */
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Arial, sans-serif;
+    }
+
+/* Styling the navbar */
+.navbar {
+    background-color: rgb(51, 51, 51); /* Semi-transparent dark background */
+    color: white; /* White text color */
+    position: fixed; /* Fix the navbar at the top */
+    top: 0; /* Align to the top */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.navbar ul {
+    list-style-type: none; /* Remove bullets from the list */
+    justify-content: space-between;
+    display: flex; /* Use flexbox for horizontal layout */
+    align-items: center; /* Center items vertically */
+    padding: 15px; /* Add some padding */
+    max-height: 30px;
+}
+
+
+.navbar h1 {
+    font-size: 24px; /* Font size for the title */
+}
+
+/* Styling the links */
+.navbar a {
+    color: white; /* White text for links */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 15px; /* Add padding around links */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+/* Hover effect for links */
+.navbar a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+}
+
+    /*----------------------------------------*/
+
+    .container {
+      width: 60%;
+      margin: 0 auto;
+      margin-top: 10rem;
+      text-align:center;
+      background-color: rgb(53, 53, 53); /* Light background */
+      border: 1px solid #7a7a7a; /* Light border */
+      border-radius: 5px; /* Rounded corners */
+      padding:10px 0px;
+    }
+
+    h1 {
+      font-size:2.5vw;
+      margin-top:10px;
+      color:white;
+
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px; 
+    }
+
+    input[name="avatar"] {
+      display:none;
+      width:200px;
+      height:200px;
+    }
+
+    label[for="pfp"] {
+      background-color: rgb(38, 38, 38);
+      font-size: small;
+      padding:10px 20px;
+      border-radius:5px;
+      color: rgb(213, 213, 213)
+    }
+
+    button {
+      background-color: green;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin-top:10px;
+      cursor: pointer;
+      margin-bottom:10px;
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <ul>
+      <h1>Chat Games</h1>
+      <li><a href="/">Home</a></li>
+      <% if(locals.myName) { %>
+        <p> Logged in as <%= locals.myName %>. <a href="/logout">Logout</a> </p>
+      <% } else {%>
+        <p> Not logged in. %> <a href="/join">Login</a> </p>
+      <% } %>
+  </ul>
+  </nav>
+
+
+  <div class="container">
+    <h1>Please enter the fields below:</h1>
+    <form id='form' enctype="multipart/form-data" action='/register'  method="POST">
+      <input pattern="^[0-9a-zA-Z]+$" name="username" type="text" required placeholder="Username">
+      <input name="email" type="email" required placeholder="Email">
+      <input name="password" type="password" required placeholder="Password">
+      <br>
+      <label for="pfp" id="pfplabel">Choose a profile picture (optional): </label>
+      <input name="avatar" id="pfp" accept=".jpg, .jpeg, .png, .gif" type="file" accept="image/*">
+      <button type="submit">Submit</button>
+    </form>
+
+    <%= locals.warnMessage %>
+
+    <% if (locals.errorMessage) {%>
+      <%= locals.errorMessage %> <a href="/join">Login Here</a>
+    <% } %>
+  </div>
+
+  <script>
+    document.getElementById('pfp').addEventListener('change', (event) => {
+      document.getElementById('pfplabel').innerHTML += document.getElementById('pfp').files[0].name;
+    })
+  </script>
+
+
+
+</body>
+</html>
+

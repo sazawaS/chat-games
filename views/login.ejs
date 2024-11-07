@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+/* Reset some default styles */
+body, h1, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Body background gradient */
+body {
+      background-color: rgb(44, 44, 44); /* Semi-transparent dark background */
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Arial, sans-serif;
+    }
+
+/* Styling the navbar */
+.navbar {
+    background-color: rgb(51, 51, 51); /* Semi-transparent dark background */
+    color: white; /* White text color */
+    position: fixed; /* Fix the navbar at the top */
+    top: 0; /* Align to the top */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.navbar ul {
+    list-style-type: none; /* Remove bullets from the list */
+    justify-content: space-between;
+    display: flex; /* Use flexbox for horizontal layout */
+    align-items: center; /* Center items vertically */
+    padding: 15px; /* Add some padding */
+    max-height: 30px;
+}
+
+
+.navbar h1 {
+    font-size: 24px; /* Font size for the title */
+}
+
+/* Styling the links */
+.navbar a {
+    color: white; /* White text for links */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 15px; /* Add padding around links */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+/* Hover effect for links */
+.navbar a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+}
+
+    /*----------------------------------------*/
+
+    .container {
+      width: 60%;
+      margin: 0 auto;
+      margin-top: 10rem;
+      text-align:center;
+      background-color: rgb(53, 53, 53); /* Light background */
+      border: 1px solid #7a7a7a; /* Light border */
+      border-radius: 5px; /* Rounded corners */
+      padding:10px 0px;
+    }
+
+    h1 {
+      color:white;
+      margin-top:10px;
+
+      font-size:2.5vw;
+      margin-bottom: 20px;
+    }
+
+    a {
+      text-underline-offset:100000000px;
+      color: white;
+    }
+
+    #errorMessage {
+      color: rgb(218, 218, 218);
+
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+    }
+
+    input[name='username'] {
+      margin-top:10px;
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px; 
+
+    }
+
+    button {
+      background-color: green;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin-top:10px;
+      cursor: pointer;
+
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <ul>
+      <h1>Chat Games</h1>
+      <li><a href="/">Home</a></li>
+      <% if(locals.myName) { %>
+        <p> Logged in:<a href="/users/me"> <%= locals.myName %> </a> <a href="/logout">Logout</a> </p>
+      <% } else {%>
+        <p> Not logged in. %> <a href="/login">Login</a> </p>
+      <% } %>
+    </ul>
+  </nav>
+
+
+  <div class="container">
+    <h1>Please enter your username and password:</h1>
+    <form id='form' action='/join' method="POST">
+      <input name="username" type="text" placeholder="Username">
+      <input name="password" type="password" placeholder="Password">
+      <button>Enter</button>
+    </form>
+
+    <p id="errorMessage"> <%= locals.errorMessage || '' %>     <a href="/register">Register Here</a>    </p>
+  </div>
+
+
+
+</body>
+</html>
+
