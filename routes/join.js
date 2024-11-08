@@ -62,6 +62,8 @@ router.get('/rooms', async (req, res)=> {
         })
       })
 
+      console.log(room)
+
       rooms.push(
         {
           roomName: room.name,
@@ -77,6 +79,29 @@ router.get('/rooms', async (req, res)=> {
     console.log(err)
   }
 
+})
+
+
+router.post('/rooms', async (req, res) => {
+
+  try {
+    const room = await Room.model.find({name: req.body.roomName}).populate('owner').populate('members')
+    const user = await User.find({username: req.session.user.username})
+    if (room[0] == undefined) {
+      res.send("ERROR: ROOM NOT FOUND")
+    } 
+    if (room[0].members.includes(user[0]._id)) {
+      res.send("ERROR: YOU ARE ALREADY IN THIS ROOM")
+    }
+    
+    room[0].members.push(user[0])
+    room[0].save()
+
+    console.log(user[0].username + " has joined the room " + room[0].name)
+
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 

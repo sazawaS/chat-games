@@ -348,7 +348,7 @@ body {
             <% }) %>
           </div>
 
-          <form class="joinForm">
+          <form class="joinForm" id="joinForm">
             <% if(room.joinType == "private") { %>
               <input name="password" placeholder="Password" type="text">
             <% } %>
@@ -386,6 +386,7 @@ body {
     const roomTypeSelection = document.getElementById("roomType")
     const passwordInput = document.getElementById("roomPassword")
     const passwordForText = document.getElementById("forRoomPassword")
+  
 
     function checkPasswordReq() {
       if (roomTypeSelection.value == "Open") {
@@ -418,21 +419,43 @@ body {
 
     form.addEventListener('submit', (e) => {
       e.preventDefault()
-      POST()
-    })
-    
-    async function POST() {
-      
-      const formData = new FormData(form)
+
       var data = {
         roomName: document.getElementById('roomName').value,
         roomType: document.getElementById('roomType').value,
         roomPassword: document.getElementById('roomPassword').value,
       }
+      POST(data, "/join/rooms/create")
+    })
+
+    const joinForms = document.querySelectorAll(".joinForm")
+
+    joinForms.forEach(joinForm => {
+      joinForm.addEventListener('submit', (e) => {
+      e.preventDefault()
+
+      var password = ""
+      if (joinForm.parentNode.children[1].innerHTML == "Password Required") {
+        password = joinForm.parentNode.children[2].innerHTML;
+      }
+      var data = {
+        roomName: joinForm.parentNode.children[0].innerHTML,
+        password: password
+      }
+
+      POST(data, "/join/rooms")
+
+    })
+    });
+
+    
+    async function POST(data, url) {
+      
+
       var post = JSON.stringify(data);
 
       try {
-        const response= await fetch("/join/rooms/create", {
+        const response= await fetch(url, {
           method: 'POST',
           body: post,
           headers: {
