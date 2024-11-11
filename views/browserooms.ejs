@@ -170,7 +170,7 @@ body {
   margin-left:10px;
   color:rgb(87, 255, 87);
 }
-.private {
+.redText {
   font-weight: 600;
   margin-left:10px;
   color:rgb(255, 70, 70);
@@ -235,6 +235,8 @@ body {
   border-radius: 4px;
   border: 1px solid #7a7a7a; /* Light border */
 }
+
+
 
 .noPopUp {
   display:none;
@@ -337,9 +339,9 @@ body {
         <div class="room">
           <label class="roomName"><%= room.roomName%></label>
           <% if(room.joinType == "public") { %>
-            <label class="public">Open</label>
+            <label id="infoLabel" class="public">Open</label>
           <% } else if (room.joinType == "private") { %>
-            <label class="private">Password Required</label>
+            <label id="infoLabel" class="redText"></label>
           <% } %>
 
           <div class="members">
@@ -443,30 +445,42 @@ body {
         password: password
       }
 
-      POST(data, "/join/rooms")
-
+      POST(data, "/join/rooms", joinForm)
     })
     });
 
     
-    async function POST(data, url) {
+    async function POST(data, url, joinForm) {
       
 
       var post = JSON.stringify(data);
 
       try {
-        const response= await fetch(url, {
+        await fetch(url, {
           method: 'POST',
           body: post,
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           }
-        })  
+        })
+        .then(response => response.json())
+        .then(resData => {
+          errorMessage(resData, joinForm)
+        });
+
       } catch(error) {
         console.log(error);
       }
 
+    }
+
+    function errorMessage(txt, joinForm) {
+      joinForm.parentNode.children[1].className = "redText"
+      joinForm.parentNode.children[1].innerHTML = txt;
+      setTimeout(function(){
+        joinForm.parentNode.children[1].innerHTML = "";
+      }, 2000)
     }
 
   </script>
