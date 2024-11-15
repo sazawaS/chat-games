@@ -3,7 +3,7 @@ This is my second ever project in web development and I suck at UI desiginning. 
 Goals of this project:
 1) Make a global messaging system (complete 2024-10-28)
 2) Make a user login/register system (complete 2024-11-1)
-3) Make a rooms system, where only two people can talk with each other (in progress) 
+3) Make a rooms system, where only people who join can talk with each other (in progress) 
 4) Make the rooms system a game.
 5) Make the UI actually likeable.
 
