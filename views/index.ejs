@@ -1,4 +1,8 @@
 <!--
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +11,7 @@
   <title>Document</title>
   <style>
 
+<<<<<<< HEAD
     body {
       background-image:linear-gradient(135deg,rgb(82, 82, 211),rgb(34, 64, 128));
     }
@@ -55,21 +60,91 @@
       background-color: #333;
       color: #fff;
     }
+=======
+
+body, h1, ul {
+    margin: 0;
+    padding: 0;
+}
+    body {
+      background-image:linear-gradient(135deg,rgb(82, 82, 211),rgb(34, 64, 128));
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Arial, sans-serif;
+
+    }
+
+
+/* Styling the navbar */
+.navbar {
+    background-color: rgb(51, 51, 51); /* Semi-transparent dark background */
+    color: white; /* White text color */
+    position: fixed; /* Fix the navbar at the top */
+    top: 0; /* Align to the top */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.navbar ul {
+    list-style-type: none; /* Remove bullets from the list */
+    display: flex; /* Use flexbox for horizontal layout */
+    justify-content: space-between;
+    align-items: center; /* Center items vertically */
+    padding: 15px; /* Add some padding */
+    max-height: 30px;
+}
+
+.navbar li {
+  justify-content: center;
+}
+
+.navbar h1 {
+    font-size: 24px; /* Font size for the title */
+}
+
+/* Styling the links */
+.navbar a {
+    color: white; /* White text for links */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 15px; /* Add padding around links */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+/* Hover effect for links */
+.navbar a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+}
+
+>>>>>>> master
 
   </style>
 </head>
 <body>
   <nav class="navbar">
     <ul>
+<<<<<<< HEAD
       <li><h1>Chat Games</h1></li>
       <li><a href="/">Home</a></li>
       <li><a href="/">Home</a></li>
   </ul>
+=======
+      <h1>Chat Games</h1>
+      <li class="middle"><a href="/">Home</a></li>
+      <% if(locals.myName) { %>
+        <p> Logged in: <a href="/users/me"> <%= locals.myName %> </a> <a href="/logout">Logout</a> </p>
+      <% } else {%>
+        <p> Not logged in. %> <a href="/register">Register</a> </p>
+      <% } %>
+    </ul>
+    
+>>>>>>> master
   </nav>
 </body>
 </html>
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 -->
 
 

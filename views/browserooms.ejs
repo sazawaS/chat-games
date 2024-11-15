@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+
+
+/* Reset some default styles */
+body, h1, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Body background gradient */
+body {
+  background-color: rgb(44, 44, 44); /* Semi-transparent dark background */
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Arial, sans-serif;
+}
+
+/* Styling the navbar */
+.navbar {
+    background-color: rgb(51, 51, 51); /* Semi-transparent dark background */
+    color: white; /* White text color */
+    position: fixed; /* Fix the navbar at the top */
+    top: 0; /* Align to the top */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.navbar ul {
+    list-style-type: none; /* Remove bullets from the list */
+    justify-content: space-between;
+    display: flex; /* Use flexbox for horizontal layout */
+    align-items: center; /* Center items vertically */
+    padding: 15px; /* Add some padding */
+    max-height: 30px;
+}
+
+
+.navbar h1 {
+    font-size: 24px; /* Font size for the title */
+}
+
+/* Styling the links */
+.navbar a {
+    color: white; /* White text for links */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 15px; /* Add padding around links */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+/* Hover effect for links */
+.navbar a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+}
+
+/* Container styling */
+.container {
+  position: relative;
+  top:70px;
+  width:80%;
+  padding: 20px; /* Add padding */
+  background-color: rgb(53, 53, 53); /* Light background */
+}
+
+/* Fixed message section styling */
+#container {
+    margin: 0 auto;
+    background-color: rgb(53, 53, 53); /* Light background */
+
+    border: 1px solid #7a7a7a; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 15px; /* Padding inside the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    animation: slideIn 0.5s forwards; /* Apply the slide-in animation */
+
+}
+
+
+/* Message class animation */
+  .room {
+    
+    background-color: rgba(102, 102, 102, 0.5); /* Light background */
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-wrap: wrap;
+    overflow-wrap: anywhere;
+
+    animation: slideIn 0.5s forwards; /* Apply the slide-in animation */
+  }
+
+    .text {
+      border: 0 solid #ccc;
+      margin-bottom: 10px;
+      margin-bottom: 5px;
+    }
+
+    .roomName, .text {
+      margin-left:0px;
+      color:white;
+    }
+    .roomName a {
+      margin-left:0px;
+      color: white;
+      text-decoration: none ;
+    }
+    .roomName a:hover {
+      text-decoration: underline;
+    }
+
+    .roomName {
+      font-weight: 500;
+    }
+    .text {
+      font-weight:400;
+    }
+    
+    .pfp {
+      margin-top:5px;
+      width:46px;
+      height:46px;
+      border-radius: 50%;
+    }
+
+    .sender, .message {
+      display:block;
+      margin-bottom: 5px;
+    }
+
+/* Slide-in animation definition */
+@keyframes slideIn {
+    from {
+        transform: translateY(100px); /* Start from 100px below */
+        opacity: 0; /* Start with opacity 0 */
+    }
+    to {
+        transform: translateY(0); /* End at original position */
+        opacity: 1; /* End with opacity 1 */
+    }
+}
+
+@keyframes slideIn2 {
+    from {
+        transform: translateY(1000px); /* Start from 100px below */
+        opacity: 0; /* Start with opacity 0 */
+    }
+    to {
+        transform: translateY(0); /* End at original position */
+        opacity: 1; /* End with opacity 1 */
+    }
+}
+
+@keyframes slideIn3 {
+    from {
+        transform: translateY(-50px); /* Start from 50px up */
+    }
+    to {
+        transform: translateY(0); /* End at original position */
+    }
+}
+
+
+
+.public {
+  font-weight: 600;
+  margin-left:10px;
+  color:rgb(87, 255, 87);
+}
+.redText {
+  font-weight: 600;
+  margin-left:10px;
+  color:rgb(255, 70, 70);
+}
+
+
+
+/* Button styling with animation */
+.joinForm button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* No border */
+    margin-top:11px;
+    width:40px;
+    height:20px;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Transition for background and transform */
+}
+
+/* Button hover effect */
+.joinForm button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.1); /* Slightly grow the button */
+}
+
+
+/* Input field style in the send message section */
+.joinForm input {
+  
+    border-radius: 5px; /* Rounded corners */
+    border-color: rgba(0,0,0,0);
+    background-color: rgba(141, 141, 141, 0.384);
+    color: #fff;
+    margin-top:10px;
+    margin-right:5px;
+  resize: none;
+}
+
+.createNew {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 5px 10px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Transition for background and transform */
+    animation: slideIn 0.5s forwards; /* Apply the slide-in animation */
+}
+
+.createPopUp {
+  position:fixed;
+  width:500px;
+  height:262px;
+  background-color: rgb(68, 68, 68);
+  top:50%;
+  left:50%;
+  margin-top:-131px;
+  margin-left:-250px;
+  animation: slideIn2 0.5s forwards; /* Apply the slide-in animation */
+  padding:10px 20px;
+  border-radius: 4px;
+  border: 1px solid #7a7a7a; /* Light border */
+}
+
+
+
+.noPopUp {
+  display:none;
+}
+
+.noPassword {
+  display:none;
+}
+
+.createPopUp label {
+  color:white;
+}
+
+.createPopUp input{
+  color:white;
+  height:20px;
+  border-radius: 5px;
+  border:none;
+  background-color: rgba(141, 141, 141, 0.384);
+}
+
+.createPopUp input, .createPopUp select, .createPopUp button[type='submit'] {
+  width: 95%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+}
+
+
+
+
+.createPopUp select {
+  width:99%;
+}
+
+.createPopUp label[class="closeButtonOpen"] {
+  top:-217px;
+  left:500px;
+  font-weight: 700;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  position:relative;
+  color:rgb(255, 255, 255);
+  cursor:pointer;
+}
+
+.createPopUp label[class="closeButtonPassword"] {
+  top:-266px;
+  left:500px;
+  font-weight: 700;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  position:relative;
+  color:rgb(255, 255, 255);
+  cursor:pointer;
+}
+
+.createPopUp button[type='submit'] {
+    width:99%;
+  margin-top:10px;
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 10px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Transition for background and transform */
+}
+
+.createPopUp button[type='submit']:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly grow the button */
+}
+
+.roomPassword {
+  animation: slideIn3 0.5s forwards;
+}
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <ul>
+      <h1>Chat Games</h1>
+      <li class="middle"><a href="/">Home</a></li>
+      <% if(locals.myName) { %>
+        <p> Logged in: <a href="/users/me"> <%= locals.myName %> </a> <a href="/logout">Logout</a> </p>
+      <% } else {%>
+        <p> Not logged in. %> <a href="/register">Register</a> </p>
+      <% } %>
+    </ul>
+  </nav>
+
+  <div class="container" id="container">
+
+    <div class="rooms">
+
+      <% rooms.forEach(room => { %>
+        <div class="room">
+          <label class="roomName"><%= room.roomName%></label>
+          <% if(room.joinType == "public") { %>
+            <label id="infoLabel" class="public">Open</label>
+          <% } else if (room.joinType == "private") { %>
+            <label id="infoLabel" class="redText"></label>
+          <% } %>
+
+          <div class="members">
+            <% room.members.forEach(member => { %>
+              <image class="pfp" src=<%=member.pfp%> alt=<%=member.username%> title=<%=member.username%>> </image>
+            <% }) %>
+          </div>
+
+          <form class="joinForm" id="joinForm">
+            <% if(room.joinType == "private") { %>
+              <input name="password" placeholder="Password" type="text">
+            <% } %>
+            <button type="submit">Join</button>
+          </form>
+
+        </div>
+      <% }); %>
+
+
+      <button class="createNew" id="createNew">Create a Room</button>        
+
+    </div>
+
+  </div>
+
+  <form class="noPopUp" id="createPopUp">
+    <label for="roomName">Room Name:</label> <input id="roomName" name="roomName" type="text"> 
+    <label for="roomType">Select Room Publicity:</label>
+    <select id="roomType" name="roomType"  required>
+      <option>Open</option>
+      <option>Password Required</option>
+    </select>
+    <label for="roomPassword" id="forRoomPassword">Room Password:</label> <input id="roomPassword" class="noPassword" name="roomPassword" type="text">
+    <button type="submit">Submit</button>
+    <label id="closeButton" class="closeButtonOpen">X</label>
+
+  </form>
+
+  <script>
+
+    const form = document.getElementById("createPopUp")
+    const openForm = document.getElementById("createNew")
+    const closeForm = document.getElementById("closeButton")
+    const roomTypeSelection = document.getElementById("roomType")
+    const passwordInput = document.getElementById("roomPassword")
+    const passwordForText = document.getElementById("forRoomPassword")
+  
+
+    function checkPasswordReq() {
+      if (roomTypeSelection.value == "Open") {
+        passwordInput.className = "noPassword"
+        closeForm.className = "closeButtonOpen" 
+        passwordForText.className="noColor"
+      } else if (roomTypeSelection.value == "Password Required") {
+        passwordInput.className = "roomPassword"
+        closeForm.className = "closeButtonPassword"
+        passwordForText.className=""
+      }
+    }
+
+    openForm.addEventListener('click', (e) => {
+      checkPasswordReq()
+      if (form.className == "noPopUp") {
+        form.className = "createPopUp"
+      } else if (form.className == "createPopUp") {
+        form.className = "noPopUp"
+      }
+    })
+
+    roomTypeSelection.addEventListener('change', (e) => {
+      checkPasswordReq()
+    })
+
+    closeForm.addEventListener('click', (e) => {
+      form.className = "noPopUp"
+    })
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+
+      var data = {
+        roomName: document.getElementById('roomName').value,
+        roomType: document.getElementById('roomType').value,
+        roomPassword: document.getElementById('roomPassword').value,
+      }
+      POST(data, "/join/rooms/create")
+    })
+
+    const joinForms = document.querySelectorAll(".joinForm")
+
+    joinForms.forEach(joinForm => {
+      joinForm.addEventListener('submit', (e) => {
+      e.preventDefault()
+
+      var password = ""
+      if (joinForm.parentNode.children[1].innerHTML == "Password Required") {
+        password = joinForm.parentNode.children[2].innerHTML;
+      }
+      var data = {
+        roomName: joinForm.parentNode.children[0].innerHTML,
+        password: password
+      }
+
+      POST(data, "/join/rooms", joinForm)
+    })
+    });
+
+    
+    async function POST(data, url, joinForm) {
+      
+
+      var post = JSON.stringify(data);
+
+      try {
+        await fetch(url, {
+          method: 'POST',
+          body: post,
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+
+          const status = response.status;
+          response.json().then(resData => {
+
+            if (status == 200) {
+              document.location.href = resData;
+            } else {
+              errorMessage(resData, joinForm)
+            }
+          })
+
+
+        });
+
+      } catch(error) {
+        console.log(error);
+      }
+
+    }
+
+    function errorMessage(txt, joinForm) {
+      joinForm.parentNode.children[1].className = "redText"
+      joinForm.parentNode.children[1].innerHTML = txt;
+      setTimeout(function(){
+        joinForm.parentNode.children[1].innerHTML = "";
+      }, 2000)
+    }
+
+  </script>
+    
+</body>
+</html>
+

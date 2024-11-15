@@ -135,15 +135,38 @@ body {
   <div class="container">
     <h1>Please enter your username and password:</h1>
     <form id='form' action='/join' method="POST">
+<<<<<<< HEAD
       <input name="username" type="text" placeholder="Username">
       <input name="password" type="password" placeholder="Password">
+=======
+      <input id="formUsername" name="username" type="text" placeholder="Username">
+      <input id="formPassword" name="password" type="password" placeholder="Password">
+>>>>>>> master
       <button>Enter</button>
     </form>
 
     <p id="errorMessage"> <%= locals.errorMessage || '' %>     <a href="/register">Register Here</a>    </p>
   </div>
 
+<<<<<<< HEAD
 
+=======
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+    
+    const socket = io()
+
+    document.getElementById("form").addEventListener("submit", (e) => {
+      const data = {
+        username: document.getElementById("formUsername").innerHtml,
+        password: document.getElementById("formPassword").innerHtml,
+      }
+      console.log(data)
+      socket.emit("readyClient", data)
+    })
+  </script>
+>>>>>>> master
 
 </body>
 </html>

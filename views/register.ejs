@@ -149,10 +149,29 @@ body {
     <% } %>
   </div>
 
+<<<<<<< HEAD
+=======
+  <script src="/socket.io/socket.io.js"></script>
+
+>>>>>>> master
   <script>
     document.getElementById('pfp').addEventListener('change', (event) => {
       document.getElementById('pfplabel').innerHTML += document.getElementById('pfp').files[0].name;
     })
+<<<<<<< HEAD
+=======
+
+    const socket = io()
+
+    document.getElementById("form").addEventListener("submit", (e) => {
+      const data = {
+        username: document.getElementById("formUsername").innerHtml,
+        password: document.getElementById("formPassword").innerHtml,
+      }
+      console.log(data)
+      socket.emit("readyClient", data)
+    })
+>>>>>>> master
   </script>
 
 

@@ -16,6 +16,13 @@ const userSchema = new mongoose.Schema({
   pfp: {
     type: String,
     default: "http://localhost:3000/assets/DefaultPFP.jpg",
+<<<<<<< HEAD
+=======
+  },
+  socketId: {
+    type: String,
+    default: ""
+>>>>>>> master
   }
 })
 

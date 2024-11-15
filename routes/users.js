@@ -4,8 +4,15 @@ const path = require("path")
 const fs = require('fs')
 
 const User = require('../models/user')
+<<<<<<< HEAD
 const upload = require('../modules/uploadPFP')
 
+=======
+const utils = require("../modules/Utils")
+const upload = require('../modules/uploadPFP')
+
+
+>>>>>>> master
 //Redirect to user's profile
 route.get("/me", (req, res) => {
   if (req.session.user == undefined || req.session.user.username == undefined ) {
@@ -24,23 +31,36 @@ route.get('/:name', async (req, res) => {
       res.redirect("/join")
     } else {
 
+<<<<<<< HEAD
       const MY = (Date.now() - user[0].creationDate);
       const days = Math.floor(MY / (1000 * 60 * 60 * 24));
       const hrs = Math.floor( (MY / (1000 * 60 * 60)) - (days/24) ) 
       const min = Math.floor( (MY / (1000 * 60)) - (hrs/60) )   
+=======
+      const dates = utils.readableDate(user[0].creationDate);
+>>>>>>> master
       
       const data = {
         username      : user[0].username,
         email         : user[0].email,
+<<<<<<< HEAD
         creationDate  : days + " days ago, " + hrs  + " hours ago, " + min + " minutes ago.",
+=======
+        creationDate  : dates.days + " days ago, " + dates.hrs  + " hours ago, " + dates.min + " minutes ago.",
+>>>>>>> master
         pfp           : user[0].pfp
       }
 
       const bool = user[0].username === req.session.user.username
       res.render('userprofile', { user: data, myName:req.session.user.username , CanEdit:bool})
     }
+<<<<<<< HEAD
   } catch {
 
+=======
+  } catch(err) {
+    console.log(err)
+>>>>>>> master
   }
 
 }) 

@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+
+/* Reset some default styles */
+body, h1, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Body background gradient */
+body {
+  background-color: rgb(44, 44, 44); /* Semi-transparent dark background */
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Arial, sans-serif;
+}
+
+/* Styling the navbar */
+.navbar {
+    background-color: rgb(51, 51, 51); /* Semi-transparent dark background */
+    color: white; /* White text color */
+    position: fixed; /* Fix the navbar at the top */
+    top: 0; /* Align to the top */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.navbar ul {
+    list-style-type: none; /* Remove bullets from the list */
+    justify-content: space-between;
+    display: flex; /* Use flexbox for horizontal layout */
+    align-items: center; /* Center items vertically */
+    padding: 15px; /* Add some padding */
+    max-height: 30px;
+}
+
+
+.navbar h1 {
+    font-size: 24px; /* Font size for the title */
+}
+
+/* Styling the links */
+.navbar a {
+    color: white; /* White text for links */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 15px; /* Add padding around links */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+/* Hover effect for links */
+.navbar a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+}
+
+/* Container styling */
+.container {
+  position: relative;
+  top:70px;
+  width:80%;
+  padding: 20px; /* Add padding */
+  background-color: rgb(53, 53, 53); /* Light background */
+}
+
+/* Fixed message section styling */
+#container {
+    margin: 0 auto;
+    background-color: rgb(53, 53, 53); /* Light background */
+
+    border: 1px solid #7a7a7a; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 15px; /* Padding inside the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+
+/* Message class animation */
+  .message {
+    
+    background-color: rgba(102, 102, 102, 0.5); /* Light background */
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-wrap: wrap;
+    overflow-wrap: anywhere;
+
+    animation: slideIn 0.5s forwards; /* Apply the slide-in animation */
+  }
+
+    .text {
+      border: 0 solid #ccc;
+      margin-bottom: 10px;
+      margin-bottom: 5px;
+    }
+
+    .sender, .text {
+      margin-left:55px;
+      color:white;
+    }
+    .sender a {
+      margin-left:0px;
+      color: white;
+      text-decoration: none;
+    }
+    .sender a:hover {
+      text-decoration: underline;
+    }
+
+    .sender {
+      font-weight: 500;
+    }
+    .text {
+      font-weight:400;
+    }
+    
+    .pfp {
+      position:absolute;
+      width:46px;
+      height:46px;
+      border-radius: 50%;
+    }
+
+    .sender, .message {
+      display:block;
+      margin-bottom: 5px;
+    }
+
+/* Slide-in animation definition */
+@keyframes slideIn {
+    from {
+        transform: translateY(100px); /* Start from 100px below */
+        opacity: 0; /* Start with opacity 0 */
+    }
+    to {
+        transform: translateY(0); /* End at original position */
+        opacity: 1; /* End with opacity 1 */
+    }
+}
+
+/* Button styling with animation */
+.sendMessage button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Transition for background and transform */
+    margin-left:10px;
+}
+
+/* Button hover effect */
+.sendMessage button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly grow the button */
+}
+
+/* Styling for the send message section */
+.sendMessage {
+    margin-top: 10px;
+    background-color: rgba(102, 102, 102, 0.5); /* Light background */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    display: flex; /* Flexbox for layout */
+    align-items: center; /* Center items vertically */
+}
+
+/* Input field style in the send message section */
+.sendMessage input {
+    flex: 1; /* Take up remaining space */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding inside input */
+    margin-right: 10px; /* Margin to separate from button */
+}
+
+textarea {
+  
+  flex: 1; /* Take up remaining space */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding inside input */
+    margin-right: 10px; /* Margin to separate from button */
+    background-color: rgba(141, 141, 141, 0.384);
+    color: #fff;
+
+  resize: none;
+}
+
+      
+
+  
+
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <ul>
+      <h1>Chat Games</h1>
+      <li class="middle"><a href="/">Home</a></li>
+      <% if(locals.myName) { %>
+        <p> Logged in: <a id="selfusername" value="<%= locals.myName %>" href="/users/me"> <%= locals.myName %> </a> <a href="/logout">Logout</a> </p>
+      <% } else {%>
+        <p> Not logged in. %> <a href="/register">Register</a> </p>
+      <% } %>
+    </ul>
+    
+  </nav>
+
+  <div class="container" id="container">
+
+    <div id="messages">
+      <% messages.forEach(message => { %>
+        <% if (message.text) { %> 
+          <div class="message">
+            <% if (message.pfp) { %>
+              <image src=<%= message.pfp %> class="pfp"></image>
+            <% } else {%>
+              <image src="http://localhost:8080/assets/DefaultPFP.jpg" class="pfp"></image>
+            <% } %>
+            <label class="sender"><a href="/users/<%= message.username %>" ><%= message.username %></a></label> 
+            <label class="text"><%= message.text %></label>
+          </div>
+        <% } %>
+      <% }); %>
+    </div>
+
+    <form class="sendMessage">
+      <textarea rows="3" cols="30" name="text" id='textInput' placeholder="Message..."></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+
+    var url = window.location.href
+    var lastSlashIndex = url.lastIndexOf("/");
+    var roomId = url.substring(lastSlashIndex + 1);
+    
+    const socket = io()
+
+    socket.on('connect', () => {
+      addMessage("[SERVER]",'You are now connected to CHAT.')
+
+
+      const params = {
+        roomId: roomId,
+        username: document.getElementById("selfusername").getAttribute("value"),
+      }
+      socket.emit("joinRoom", params) 
+    })
+    socket.on('disconnect', () => {
+      addMessage("[SERVER]",'Warning: Disconnected from CHAT.')
+    })
+
+    window.onunload = function() {
+      const params = {
+        roomId: roomId,
+        username: document.getElementById("selfusername").getAttribute("value"),
+      }
+      socket.emit("leaveRoom", params) 
+    }
+
+
+    const form = document.querySelector("form")
+    const textInput = document.getElementById("textInput")
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      POST()
+    })
+
+    //KeyPress Enter
+    textInput.addEventListener("keypress", (e) => {
+      if (e.keyCode == 13) {
+        e.preventDefault()
+        POST()
+      }
+    });
+
+
+    //Send the POST method to server
+    async function POST() {
+      if (textInput.value == "") {return;}
+
+      var formData = new FormData(form)
+      var data = {
+        text: document.querySelector("textarea").value,
+      }
+      var post = JSON.stringify(data);
+      textInput.value = ""
+      textInput.focus()
+
+      try {
+        const response= await fetch("/rooms/"+roomId, {
+          method: 'POST',
+          body: post,
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })  
+      } catch(error) {
+        console.log(error);
+      }
+    }
+
+    //Make a message
+    function addMessage(username, text, img) {
+      const messages = document.getElementById("messages")
+
+      const div = document.createElement('div')
+      div.className="message"
+      div.id="message"
+      messages.append(div)
+
+      console.log(img)
+      if (username != "[SERVER]") {
+
+        const pfp = document.createElement('img')
+        pfp.className = "pfp"
+        pfp.src = img
+        div.appendChild(pfp)
+      }
+
+
+      const sender = document.createElement('label')
+      sender.className = "sender"
+      div.appendChild(sender)
+
+      if (username != "[SERVER]") {
+        const a = document.createElement("a")
+        a.href = "/users/"+username
+        a.innerHTML = username
+        sender.append(a)
+      } else {
+        sender.innerHTML = username;
+      }
+
+    
+      const texte = document.createElement('label')
+      texte.className = "text"
+      texte.innerHTML = text
+      div.appendChild(texte)
+      window.scrollBy(0, 100);      
+
+      if (username == "[SERVER]") {
+        sender.style.marginLeft = 0;
+        texte.style.marginLeft = 0;
+      }
+    }
+
+
+    socket.on('newRoomMessage', message => {
+      addMessage(message.username, message.text, message.pfp)
+    })
+
+  </script>
+</body>
+</html>
+
