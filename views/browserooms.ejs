@@ -464,9 +464,19 @@ body {
             'Content-Type': 'application/json'
           }
         })
-        .then(response => response.json())
-        .then(resData => {
-          errorMessage(resData, joinForm)
+        .then(response => {
+
+          const status = response.status;
+          response.json().then(resData => {
+
+            if (status == 200) {
+              document.location.href = resData;
+            } else {
+              errorMessage(resData, joinForm)
+            }
+          })
+
+
         });
 
       } catch(error) {

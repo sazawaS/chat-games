@@ -87,12 +87,12 @@ router.post('/rooms', async (req, res) => {
     const user = await User.find({username: req.session.user.username})
 
     if (room[0] == undefined) {
-      res.send('"ERROR: ROOM NOT FOUND"')
+      res.status(400).send('"ERROR: ROOM NOT FOUND"')
       return;
     } 
 
     if (room[0].password !== req.body.password) {
-      res.send('"WRONG PASSWORD"')
+      res.status(400).send('"WRONG PASSWORD"')
       return;
     }
     var memberIdList = []
@@ -100,13 +100,15 @@ router.post('/rooms', async (req, res) => {
       memberIdList.push(member.id)
     }) 
     if (memberIdList.includes(user[0].id)) {
-      res.send('"ERROR: YOU ARE ALREADY IN THIS ROOM"')
+      res.status(400).send('"ERROR: YOU ARE ALREADY IN THIS ROOM"')
       return;
     }
     
     room[0].members.push(user[0])
     room[0].save()
 
+    const newUrl = "/rooms/"+room[0].id
+    res.send(JSON.stringify(newUrl))
   } catch (err) {
     console.log(err)
   }
@@ -144,6 +146,8 @@ router.post('/rooms/create', async (req, res) => {
       })
 
       await newRoom.save();
+      res.redirect("/rooms/"+newRoom.id)
+
     }
 
   } catch (err) {
