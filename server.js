@@ -10,10 +10,6 @@ const session = require('cookie-session')
 const mongoose = require('mongoose')
 
 
-const users = require('./routes/users');
-const joinRouter = require('./routes/join');
-const registerRouter = require('./routes/register');
-const gameroomRouter = require('./routes/gameroom');
 const globals = require('./modules/globals')
 
 const User = require('./models/user')

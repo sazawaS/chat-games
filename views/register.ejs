@@ -149,17 +149,12 @@ body {
     <% } %>
   </div>
 
-<<<<<<< HEAD
-=======
   <script src="/socket.io/socket.io.js"></script>
 
->>>>>>> master
   <script>
     document.getElementById('pfp').addEventListener('change', (event) => {
       document.getElementById('pfplabel').innerHTML += document.getElementById('pfp').files[0].name;
     })
-<<<<<<< HEAD
-=======
 
     const socket = io()
 
@@ -171,7 +166,6 @@ body {
       console.log(data)
       socket.emit("readyClient", data)
     })
->>>>>>> master
   </script>
 
 

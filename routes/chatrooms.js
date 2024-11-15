@@ -91,7 +91,6 @@ router.get("/:id", async (req,res) =>{
       const user = await User.find({username: req.session.user.username})
 
       if (checkUserInRoom(room, user[0].id)) {
-        console.log(room.messages)
         res.render("chatroom", {messages:room.messages, myName:req.session.user.username})
         return;
       }

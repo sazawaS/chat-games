@@ -4,21 +4,13 @@ const session = require('express-session');
 
 
 const User = require("../models/user")
-<<<<<<< HEAD
-const Message = require("../models/message")
-=======
 const Room = require("../models/room")
 const utils = require("../modules/Utils")
->>>>>>> master
 
 router.get('/', (req, res) => {
   
   if (req.session.user && req.session.user.username) {
-<<<<<<< HEAD
-    res.redirect("/gameroom")
-=======
     res.redirect("join/rooms")
->>>>>>> master
     return;
   }
   res.render('login')
@@ -38,11 +30,7 @@ router.post('/', async (req, res) => {
       res.render('login', { errorMessage: 'Wrong password or username! Dont have an account?'})
     } else {
       req.session.user = { id:user.id, username: req.body.username };
-<<<<<<< HEAD
-      res.redirect('/gameroom')
-=======
       res.redirect('join/rooms')
->>>>>>> master
     }
   } catch { 
     res.render('login', { errorMessage: 'Wrong password or username! Dont have an account?'})
@@ -50,8 +38,6 @@ router.post('/', async (req, res) => {
 
 })
 
-<<<<<<< HEAD
-=======
 
 //Rooms
 router.get('/rooms', async (req, res)=> {
@@ -169,5 +155,4 @@ router.post('/rooms/create', async (req, res) => {
   }
 })
 
->>>>>>> master
 module.exports = router;
