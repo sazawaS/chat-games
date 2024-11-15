@@ -8,18 +8,15 @@ const app = express()
 const ejs = require('ejs')
 const session = require('cookie-session')
 const mongoose = require('mongoose')
-<<<<<<< HEAD
 
 
 const users = require('./routes/users');
 const joinRouter = require('./routes/join');
 const registerRouter = require('./routes/register');
 const gameroomRouter = require('./routes/gameroom');
-=======
 const globals = require('./modules/globals')
 
 const User = require('./models/user')
->>>>>>> master
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'))
@@ -44,10 +41,6 @@ app.get("/", (req, res) => {
   res.render('index')
 })
 
-<<<<<<< HEAD
-app.get("/logout", (req, res) => {
-  console.log("Logging out " + req.session.user.username)
-=======
 app.get("/logout", async (req, res) => {
 
   try {
@@ -62,7 +55,6 @@ app.get("/logout", async (req, res) => {
     console.log('err happened in unreadying client')
   }
 
->>>>>>> master
   req.session.user = {};
   res.redirect("/")
 })
@@ -74,16 +66,6 @@ db.once('open', () => console.log("Database connection success"))
 
 const server = app.listen(process.env.PORT || 3000);
 const io = require('socket.io')(server);
-<<<<<<< HEAD
-io.on("connection", socket => {
-})
-
-app.use("/join", joinRouter)
-app.use("/register", registerRouter)
-app.use("/gameroom", gameroomRouter)
-app.use("/users", users)
-
-=======
 globals.setGlobals("io", io)
 
 
@@ -98,4 +80,3 @@ app.use("/register", registerRouter)
 app.use("/globalchat", globalchatRouter)
 app.use("/users", users)
 app.use("/rooms", chatRoomRouter)
->>>>>>> master
