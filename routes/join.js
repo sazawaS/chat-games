@@ -7,7 +7,7 @@ const User = require("../models/user")
 const Room = require("../models/room")
 const utils = require("../modules/Utils")
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   
   if (req.session.user && req.session.user.username) {
     res.redirect("join/rooms")
@@ -50,8 +50,18 @@ router.get('/rooms', async (req, res)=> {
   try {
     
     const allRooms = await Room.model.find({}).populate('owner').populate('members')
+    const user = (await User.find({username: req.session.user.username}))[0]
+
     var rooms = []
-    allRooms.forEach(room => {
+
+    for (let i = 0; i < allRooms.length; i++) {
+
+      const room = allRooms[i];
+
+      if (checkUserInRoom(room, user.id)) {
+        res.redirect("/rooms/"+room.id)
+        return;
+      }
 
       const dates = utils.readableDate(room.time);
       var members = []
@@ -70,7 +80,7 @@ router.get('/rooms', async (req, res)=> {
           members: members,
         }
       )
-    })
+    }
     res.render('browserooms', { rooms:rooms, myName:req.session.user.username } )
 
   } catch(err) {
@@ -154,5 +164,17 @@ router.post('/rooms/create', async (req, res) => {
 
   }
 })
+
+
+function checkUserInRoom(room, userId) {
+  var memberIdList = []
+  room.members.forEach(member => {
+    memberIdList.push(member.id)
+  }) 
+  if (memberIdList.includes(userId)) {
+    return true;
+  }
+  return false;
+} 
 
 module.exports = router;

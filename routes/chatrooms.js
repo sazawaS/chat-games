@@ -19,6 +19,22 @@ function checkUserInRoom(room, userId) {
   return false;
 } 
 
+async function sendServerMessage(room, message) {
+
+  const date = new Date()
+  const newMessage = new Message({
+    username: "[SERVER]",
+    text:message,
+    time: date.getTime(),
+    pfp: "",
+  })
+
+  await newMessage.save()
+  room.messages.push(newMessage)
+  await room.save()
+  globals.getGlobals("io").to(room.id).emit('newRoomMessage', newMessage);
+}
+
 globals.getGlobals("io").on("connection", (socket) => {
 
   /*
@@ -48,6 +64,7 @@ globals.getGlobals("io").on("connection", (socket) => {
 
       if (checkUserInRoom(room, user[0].id)) {
         socket.join(req.roomId)
+        sendServerMessage(room, req.username + " has joined the room.")
       }
 
     } catch (err) {
@@ -69,9 +86,9 @@ globals.getGlobals("io").on("connection", (socket) => {
 
       if (checkUserInRoom(room, user[0].id)) {
         socket.leave(req.roomId)
-        room.members.splice( room.members.indexOf(user), 1)
+        room.members.splice( room.members.indexOf(user[0]), 1)
         await room.save();
-        console.log(req.username + " is leaving room " + req.roomId)
+        sendServerMessage(room, req.username + " has left the room.")
       }
 
     } catch (err) {
@@ -94,6 +111,8 @@ router.get("/:id", async (req,res) =>{
         res.render("chatroom", {messages:room.messages, myName:req.session.user.username})
         return;
       }
+      res.redirect("/join/rooms")
+      return;
     }
     res.redirect("/join")
     
@@ -105,12 +124,12 @@ router.get("/:id", async (req,res) =>{
 router.post('/:id', async (req, res) => {
 
   const id = req.params.id;
-  const date = new Date()
   try {
 
     const room = await Room.model.findById(id).populate("messages").populate('members')
     const user = await User.find({username: req.session.user.username})
 
+    const date = new Date()
     if (user[0] && checkUserInRoom(room, user[0].id)) {
       const newMessage = new Message({
         username: req.session.user.username,
@@ -124,6 +143,8 @@ router.post('/:id', async (req, res) => {
 
       req.io.to(id).emit('newRoomMessage', newMessage);
 
+    } else {
+      
     }
   
   } catch (error) {

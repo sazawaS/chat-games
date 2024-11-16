@@ -216,8 +216,9 @@ textarea {
 
     <div id="messages">
       <% messages.forEach(message => { %>
-        <% if (message.text) { %> 
+        <% if (message.text && message.username !== "[SERVER]") { %> 
           <div class="message">
+            
             <% if (message.pfp) { %>
               <image src=<%= message.pfp %> class="pfp"></image>
             <% } else {%>
@@ -227,6 +228,7 @@ textarea {
             <label class="text"><%= message.text %></label>
           </div>
         <% } %>
+
       <% }); %>
     </div>
 
@@ -248,7 +250,7 @@ textarea {
     const socket = io()
 
     socket.on('connect', () => {
-      addMessage("[SERVER]",'You are now connected to CHAT.')
+      addMessage("[SERVER]",'You are now connected to CHAT. Write /leave to exit')
 
 
       const params = {
@@ -261,13 +263,7 @@ textarea {
       addMessage("[SERVER]",'Warning: Disconnected from CHAT.')
     })
 
-    window.onunload = function() {
-      const params = {
-        roomId: roomId,
-        username: document.getElementById("selfusername").getAttribute("value"),
-      }
-      socket.emit("leaveRoom", params) 
-    }
+    window.onunload = leaveRoom;
 
 
     const form = document.querySelector("form")
@@ -289,6 +285,10 @@ textarea {
     //Send the POST method to server
     async function POST() {
       if (textInput.value == "") {return;}
+      if (textInput.value == "/leave") {
+        leaveRoom();
+        return;
+      }
 
       var formData = new FormData(form)
       var data = {
@@ -357,6 +357,14 @@ textarea {
       }
     }
 
+    function leaveRoom() {
+      const params = {
+        roomId: roomId,
+        username: document.getElementById("selfusername").getAttribute("value"),
+      }
+      socket.emit("leaveRoom", params) 
+      document.location.href = "/join"
+    }
 
     socket.on('newRoomMessage', message => {
       addMessage(message.username, message.text, message.pfp)
