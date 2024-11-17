@@ -156,7 +156,8 @@ router.post('/rooms/create', async (req, res) => {
       })
 
       await newRoom.save();
-      res.redirect("/rooms/"+newRoom.id)
+      const url = "/rooms/"+newRoom.id;
+      res.send(JSON.stringify(url));
 
     }
 

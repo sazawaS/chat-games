@@ -370,6 +370,13 @@ textarea {
       addMessage(message.username, message.text, message.pfp)
     })
 
+    socket.on('deleteRoom', (hostName) => {
+      addMessage("[SERVER]", "The host, " + hostName + ", has left and the room will be deleted. You will be redirected in 3 seconds...", "")
+      setTimeout(() => {
+        document.location.href = "/join" 
+      }, 3000)
+    })
+
   </script>
 </body>
 </html>

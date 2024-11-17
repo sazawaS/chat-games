@@ -428,6 +428,7 @@ body {
         roomPassword: document.getElementById('roomPassword').value,
       }
       POST(data, "/join/rooms/create")
+      location.reload();
     })
 
     const joinForms = document.querySelectorAll(".joinForm")

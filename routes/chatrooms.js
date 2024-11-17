@@ -21,18 +21,24 @@ function checkUserInRoom(room, userId) {
 
 async function sendServerMessage(room, message) {
 
-  const date = new Date()
-  const newMessage = new Message({
-    username: "[SERVER]",
-    text:message,
-    time: date.getTime(),
-    pfp: "",
-  })
+  try {
 
-  await newMessage.save()
-  room.messages.push(newMessage)
-  await room.save()
-  globals.getGlobals("io").to(room.id).emit('newRoomMessage', newMessage);
+    const date = new Date()
+    const newMessage = new Message({
+      username: "[SERVER]",
+      text:message,
+      time: date.getTime(),
+      pfp: "",
+    })
+
+    await newMessage.save()
+    room.messages.push(newMessage)
+    await room.save()
+    globals.getGlobals("io").to(room.id).emit('newRoomMessage', newMessage);
+
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 globals.getGlobals("io").on("connection", (socket) => {
@@ -76,7 +82,7 @@ globals.getGlobals("io").on("connection", (socket) => {
   socket.on("leaveRoom", async (req) => {
 
     try {
-      const room = await Room.model.findById(req.roomId).populate('messages').populate('members')
+      const room = await Room.model.findById(req.roomId).populate('messages').populate('members').populate('owner')
       const user = await User.find({username: req.username})
 
       if (room == undefined) {
@@ -89,6 +95,11 @@ globals.getGlobals("io").on("connection", (socket) => {
         room.members.splice( room.members.indexOf(user[0]), 1)
         await room.save();
         sendServerMessage(room, req.username + " has left the room.")
+
+        if (user[0].id == room.owner.id) {
+          globals.getGlobals("io").to(room.id).emit('deleteRoom', req.username)
+          await Room.model.findByIdAndDelete(room.id)
+        }
       }
 
     } catch (err) {
@@ -103,12 +114,17 @@ router.get("/:id", async (req,res) =>{
 
   const id = req.params.id;
   try {
-    const room = await Room.model.findById(id).populate("messages").populate('members')
+    const room = await Room.model.findById(id).populate("messages").populate('members').populate('owner')
     if (req.session.user !== undefined) {
       const user = await User.find({username: req.session.user.username})
 
       if (checkUserInRoom(room, user[0].id)) {
-        res.render("chatroom", {messages:room.messages, myName:req.session.user.username})
+
+        if (room.owner.id == user[0].id) {
+          res.render("chatroom", {messages:room.messages, myName:req.session.user.username, owner:true})
+        }
+
+        res.render("chatroom", {messages:room.messages, myName:req.session.user.username, owner:false})
         return;
       }
       res.redirect("/join/rooms")
