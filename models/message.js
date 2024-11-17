@@ -4,6 +4,9 @@ const messageSchema = new mongoose.Schema({
   username:{
     type:String
   },
+  letter:{
+    type:String
+  },
   text:{
     type:String
   },

@@ -142,6 +142,29 @@ body {
     }
 }
 
+
+@keyframes slideIn2 {
+    from {
+        transform: translateY(-10000px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeAway {
+    from {
+      scale: 1;
+      opacity: 1;
+    }
+    to {
+      scale: 1.5;
+      opacity: 0;
+    }
+}
+
+
+
 /* Button styling with animation */
 .sendMessage button {
     background-color: #4CAF50; /* Green background */
@@ -191,9 +214,29 @@ textarea {
   resize: none;
 }
 
-      
+#wordSelectScreen {
+  position:fixed;
+  width:500px;
+  height:262px;
+  background-color: rgb(68, 68, 68);
+  top:50%;
+  left:50%;
+  margin-top:-131px;
+  margin-left:-250px;
+  padding:10px 20px;
+  border-radius: 4px;
+  border: 1px solid #7a7a7a; /* Light border */
+}
 
-  
+.display {
+  animation: slideIn2 2s forwards;
+}
+
+.noDisplay {
+  animation: fadeAway 0.5s forwards;
+}
+
+      
 
 
   </style>
@@ -224,7 +267,7 @@ textarea {
             <% } else {%>
               <image src="http://localhost:8080/assets/DefaultPFP.jpg" class="pfp"></image>
             <% } %>
-            <label class="sender"><a href="/users/<%= message.username %>" ><%= message.username %></a></label> 
+            <label class="sender"><a href="/users/<%= message.username %>" ><%= message.username %></a> (Cant say: <%= message.letter %>)</label> 
             <label class="text"><%= message.text %></label>
           </div>
         <% } %>
@@ -236,8 +279,12 @@ textarea {
       <textarea rows="3" cols="30" name="text" id='textInput' placeholder="Message..."></textarea>
       <button type="submit">Send</button>
     </form>
+
   </div>
 
+  <div class="display" id="wordSelectScreen"> 
+    
+  </div>
 
   <script src="/socket.io/socket.io.js"></script>
 
@@ -249,9 +296,8 @@ textarea {
     
     const socket = io()
 
-    socket.on('connect', () => {
+    socket.on('connect', (myLetter) => {
       addMessage("[SERVER]",'You are now connected to CHAT. Write /leave to exit')
-
 
       const params = {
         roomId: roomId,
@@ -263,7 +309,12 @@ textarea {
       addMessage("[SERVER]",'Warning: Disconnected from CHAT.')
     })
 
-    window.onunload = leaveRoom;
+    socket.on('letterUpdate' , (letterData) => {
+      console.log(letterData)
+    })
+    
+
+    //window.onunload = leaveRoom;
 
 
     const form = document.querySelector("form")
@@ -313,7 +364,7 @@ textarea {
     }
 
     //Make a message
-    function addMessage(username, text, img) {
+    function addMessage(username, text, img, letter) {
       const messages = document.getElementById("messages")
 
       const div = document.createElement('div')
@@ -321,9 +372,7 @@ textarea {
       div.id="message"
       messages.append(div)
 
-      console.log(img)
       if (username != "[SERVER]") {
-
         const pfp = document.createElement('img')
         pfp.className = "pfp"
         pfp.src = img
@@ -340,6 +389,7 @@ textarea {
         a.href = "/users/"+username
         a.innerHTML = username
         sender.append(a)
+        sender.innerHTML += " (Cant say: " + letter + ")"
       } else {
         sender.innerHTML = username;
       }
@@ -367,7 +417,7 @@ textarea {
     }
 
     socket.on('newRoomMessage', message => {
-      addMessage(message.username, message.text, message.pfp)
+      addMessage(message.username, message.text, message.pfp, message.letter)
     })
 
     socket.on('deleteRoom', (hostName) => {

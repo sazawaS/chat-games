@@ -30,7 +30,12 @@ const roomSchema = new mongoose.Schema({
   messages: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Message'
-  }]
+  }],
+  lettersData: {
+    type: Map,
+    of: String,
+    default: {}
+  }
 
 })
 

@@ -70,6 +70,7 @@ globals.getGlobals("io").on("connection", (socket) => {
 
       if (checkUserInRoom(room, user[0].id)) {
         socket.join(req.roomId)
+        globals.getGlobals("io").to(socket.id).emit("letterUpdate", room.lettersData.get(user[0].id))
         sendServerMessage(room, req.username + " has joined the room.")
       }
 
@@ -115,6 +116,7 @@ router.get("/:id", async (req,res) =>{
   const id = req.params.id;
   try {
     const room = await Room.model.findById(id).populate("messages").populate('members').populate('owner')
+
     if (req.session.user !== undefined) {
       const user = await User.find({username: req.session.user.username})
 
@@ -122,6 +124,12 @@ router.get("/:id", async (req,res) =>{
 
         if (room.owner.id == user[0].id) {
           res.render("chatroom", {messages:room.messages, myName:req.session.user.username, owner:true})
+        }
+
+        if (room.lettersData.get(user[0].id) == null) {
+          const newLetter = createRandomLetter();
+          room.lettersData.set(user[0].id, newLetter)
+          await room.save()
         }
 
         res.render("chatroom", {messages:room.messages, myName:req.session.user.username, owner:false})
@@ -146,12 +154,13 @@ router.post('/:id', async (req, res) => {
     const user = await User.find({username: req.session.user.username})
 
     const date = new Date()
-    if (user[0] && checkUserInRoom(room, user[0].id)) {
+    if (user[0] !== undefined && checkUserInRoom(room, user[0].id)) {
       const newMessage = new Message({
-        username: req.session.user.username,
-        text:req.body.text,
-        time: date.getTime(),
-        pfp: user[0].pfp,
+        username  : req.session.user.username,
+        letter    : room.lettersData.get(user[0].id),
+        text      : req.body.text,
+        time      : date.getTime(),
+        pfp       : user[0].pfp,
       })
       await newMessage.save()
       room.messages.push(newMessage)
@@ -181,7 +190,9 @@ router.delete( ":/id", async (req,res) => {
 });
 
 
-
-
+function createRandomLetter() {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  return chars.charAt(Math.floor(Math.random() * chars.length));
+}
 
 module.exports = router;
