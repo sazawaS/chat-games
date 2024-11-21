@@ -283,7 +283,9 @@ textarea {
   </div>
 
   <div class="display" id="wordSelectScreen"> 
-    
+    <label>Your can't say the word word:</label>
+    <label id="word"> L </label> <br>
+    <buttton id="closeDisplay">Okay!</buttton>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
@@ -310,11 +312,9 @@ textarea {
     })
 
     socket.on('letterUpdate' , (letterData) => {
-      console.log(letterData)
+      document.getElementById("word").innerHTML = letterData;
     })
     
-
-    //window.onunload = leaveRoom;
 
 
     const form = document.querySelector("form")
@@ -331,6 +331,10 @@ textarea {
         POST()
       }
     });
+
+    document.getElementById("closeDisplay").addEventListener("click", (e) => {
+      document.getElementById("wordSelectScreen").className = "noDisplay"
+    })
 
 
     //Send the POST method to server
